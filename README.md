@@ -1,11 +1,3 @@
-# DYNAMIC Fire risk indicator implementation
-
-This repository contains the implementation of the dynamic fire risk indicator described in the submitted paper:
-
-R.D: Strand and L.M. Kristensen. *An implementation, evaluation and validation of a dynamic fire and conflagration risk indicator for wooden homes*. Submitted for review.
-
-which uses forecast and weather data observation for computing fire risk indication in the form of time-to-flash-over (ttf) for wooden houses. 
-
 # Installation
 
 The project is based on using the [Poetry package manager](https://python-poetry.org/).
