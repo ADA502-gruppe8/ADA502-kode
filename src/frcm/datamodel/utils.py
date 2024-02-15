@@ -39,7 +39,6 @@ def within_timedelta(data: list[dm.WeatherDataPoint], max_delta: datetime.timede
 
 
 def dict_to_wdp(wdp) -> dm.WeatherDataPoint:
-
     wdp = dm.WeatherDataPoint(
         temperature=wdp['temperature'],
         humidity=wdp['humidity'],
@@ -50,12 +49,13 @@ def dict_to_wdp(wdp) -> dm.WeatherDataPoint:
 
 
 def list_to_wdps(wdps) -> list[dm.WeatherDataPoint]:
-
     return list(map(dict_to_wdp, wdps))
 
 
-def wdps_list_str(wdps : list[dm.WeatherDataPoint]) -> str:
+def wdps_list_str(wdps: list[dm.WeatherDataPoint]) -> str:
     # TODO: current string concatenation is inefficient
+    return '\n'.join(str(wdp) for wdp in wdps)
+
     format_str = ''
     for wdp in wdps:
         format_str = format_str + str(wdp) + '\n'
@@ -68,7 +68,6 @@ def wdps_list_str(wdps : list[dm.WeatherDataPoint]) -> str:
 # TODO: check that the required data is also present in the data points
 
 def wd_validate(wd: dm.WeatherData, max_delta: datetime.timedelta):
-
     max_time_obs = max_time(wd.observations.data)
     min_time_fct = min_time(wd.forecast.data)
 
