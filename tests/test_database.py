@@ -1,5 +1,6 @@
 import psycopg2
 import unittest
+from decouple import config
 
 class TestDatabaseConnection(unittest.TestCase):
     def test_database(self):
@@ -7,8 +8,8 @@ class TestDatabaseConnection(unittest.TestCase):
             'host': 'localhost',
             'database': 'postgres',
             'port':  5432,
-            'user': 'postgres',
-            'password': '123456aa'
+            'user': config('DATABASE_USERNAME'),
+            'password': config('DATABASE_PASSWORD')
         }
         
         try:
