@@ -1,5 +1,6 @@
 import datetime
 import dateutil.parser
+from pydantic import ValidationError
 
 import frcm.datamodel.model as dm
 
@@ -54,8 +55,6 @@ def list_to_wdps(wdps) -> list[dm.WeatherDataPoint]:
 
 def wdps_list_str(wdps: list[dm.WeatherDataPoint]) -> str:
     # TODO: current string concatenation is inefficient
-    return '\n'.join(str(wdp) for wdp in wdps)
-
     format_str = ''
     for wdp in wdps:
         format_str = format_str + str(wdp) + '\n'
@@ -68,16 +67,20 @@ def wdps_list_str(wdps: list[dm.WeatherDataPoint]) -> str:
 # TODO: check that the required data is also present in the data points
 
 def wd_validate(wd: dm.WeatherData, max_delta: datetime.timedelta):
-    max_time_obs = max_time(wd.observations.data)
-    min_time_fct = min_time(wd.forecast.data)
+    try:
+        max_time_obs = max_time(wd.observations.data)
+        min_time_fct = min_time(wd.forecast.data)
 
-    is_sorted_obs = is_sorted(wd.observations.data)
-    is_sorted_fct = is_sorted(wd.forecast.data)
+        is_sorted_obs = is_sorted(wd.observations.data)
+        is_sorted_fct = is_sorted(wd.forecast.data)
 
-    is_delta_obs = within_timedelta(wd.observations.data, max_delta)
-    is_delta_fct = within_timedelta(wd.forecast.data, max_delta)
+        is_delta_obs = within_timedelta(wd.observations.data, max_delta)
+        is_delta_fct = within_timedelta(wd.forecast.data, max_delta)
 
-    return ((max_time_obs < min_time_fct) and
-            is_sorted_obs and is_sorted_fct and
-            is_delta_obs and is_delta_fct and
-            (max_time_obs - min_time_fct) < max_delta)
+        return ((max_time_obs < min_time_fct) and
+                is_sorted_obs and is_sorted_fct and
+                is_delta_obs and is_delta_fct and
+                (max_time_obs - min_time_fct) < max_delta)
+    except Exception as e:
+        print(f"Unexpected error in wd_validate: {e}")
+        raise ValidationError("Unexpected error in wd_validate") from e
