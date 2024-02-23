@@ -1,4 +1,6 @@
 FROM python:3.12
+FROM postgres:latest
+COPY init-database.d /docker-entrypoint-initdb.d/
 COPY kefan .
 COPY pyproject.toml .
 RUN pip install pipx
