@@ -13,5 +13,6 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
     volumes:
       - ./data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Map the init.sql file
     ports:
-      -   5432:5432
+      -  5432:5432

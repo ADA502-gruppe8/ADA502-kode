@@ -23,8 +23,11 @@ RUN /root/.local/bin/poetry install
 COPY src .
 COPY tests .
 
+# Copy the database initialization scripts
+COPY init.sql .
+
 # Expose port  80 for the app
-EXPOSE  80
+EXPOSE   80   5432
 
 # Define the command to run your app using gunicorn
 CMD ["/root/.local/bin/poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
