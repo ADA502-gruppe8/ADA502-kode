@@ -106,9 +106,9 @@ class METClient(WeatherDataClient):
 
     def fetch_observations_raw(self, source: str, start: datetime.datetime, end: datetime.datetime):
 
+        "2024-02-21/2024-02-23"
         time_period = METClient.format_period(start, end)
 
-        "2024-02-21/2024-02-23"
         print(f'Fetch observation : {time_period}')
 
         parameters = {'sources': source,

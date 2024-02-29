@@ -50,6 +50,8 @@ def preprocess(wd: WeatherData):
     humidity_clean, time_humidity_clean = clean_nan(data_vector=humidity_vector, time_vector=timestamp_vector_sec)
     wind_clean, time_wind_clean = clean_nan(data_vector=wind_vector, time_vector=timestamp_vector_sec)
 
+
+
     # Create interpolation time vector in seconds. This vector contains all the datapoints for which the np.interp-
     # function shall provide interpolated values.
     interpolation_timevector_sec = [i for i in range(timestamp_vector_sec[0], timestamp_vector_sec[-1] + 1, delta_t)]
