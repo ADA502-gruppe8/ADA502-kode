@@ -55,11 +55,7 @@ def list_to_wdps(wdps) -> list[dm.WeatherDataPoint]:
 
 def wdps_list_str(wdps: list[dm.WeatherDataPoint]) -> str:
     # TODO: current string concatenation is inefficient
-    format_str = ''
-    for wdp in wdps:
-        format_str = format_str + str(wdp) + '\n'
-
-    return format_str
+    return '\n'.join(str(wdp) for wdp in wdps)
 
 
 # TODO: validate could possibly raise different exceptions depending on violation

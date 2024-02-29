@@ -8,11 +8,12 @@ from decouple import config
 from frcm.weatherdata.client import WeatherDataClient
 from frcm.weatherdata.extractor import Extractor
 from frcm.datamodel.model import Location, Observations, Forecast
+from frcm.weatherdata.extractor_met import METExtractor
 
 
 class METClient(WeatherDataClient):
 
-    def __init__(self, extractor: Extractor):
+    def __init__(self, extractor: Extractor = None):
 
         self.forecast_endpoint = 'https://api.met.no/weatherapi/locationforecast/2.0/compact.json'
 
@@ -22,7 +23,10 @@ class METClient(WeatherDataClient):
         self.MET_CLIENT_ID = config('MET_CLIENT_ID')
         self.MET_CLIENT_SECRET = config('MET_CLIENT_SECRET')
 
-        self.extractor = extractor
+        if extractor is None:
+            self.extractor = METExtractor()
+        else:
+            self.extractor = extractor
 
     def send_met_request(self, parameters):
 

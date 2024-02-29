@@ -7,11 +7,11 @@ from frcm.datamodel.model import Location
 
 # sample code illustrating how to use the Fire Risk Computation API (FRCAPI) yosafe var her
 if __name__ == "__main__":
-
-    met_extractor = METExtractor()
+    # met_extractor = METExtractor()
 
     # TODO: maybe embed extractor into client
-    met_client = METClient(extractor=met_extractor)
+    # met_client = METClient(extractor=met_extractor)
+    met_client = METClient()
 
     frc = FireRiskAPI(client=met_client)
 
