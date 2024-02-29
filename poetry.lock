@@ -12,6 +12,26 @@ files = [
 ]
 
 [[package]]
+name = "anyio"
+version = "4.3.0"
+description = "High level compatibility layer for multiple asynchronous event loop implementations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "anyio-4.3.0-py3-none-any.whl", hash = "sha256:048e05d0f6caeed70d731f3db756d35dcc1f35747c8c403364a8332c630441b8"},
+    {file = "anyio-4.3.0.tar.gz", hash = "sha256:f75253795a87df48568485fd18cdd2a3fa5c4f7c5be8e5e36637733fce06fed6"},
+]
+
+[package.dependencies]
+idna = ">=2.8"
+sniffio = ">=1.1"
+
+[package.extras]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (>=0.23)"]
+
+[[package]]
 name = "certifi"
 version = "2023.11.17"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -131,6 +151,25 @@ files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
+
+[[package]]
+name = "fastapi"
+version = "0.110.0"
+description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fastapi-0.110.0-py3-none-any.whl", hash = "sha256:87a1f6fb632a218222c5984be540055346a8f5d8a68e8f6fb647b1dc9934de4b"},
+    {file = "fastapi-0.110.0.tar.gz", hash = "sha256:266775f0dcc95af9d3ef39bad55cff525329a931d5fd51930aadd4f428bf7ff3"},
+]
+
+[package.dependencies]
+pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0"
+starlette = ">=0.36.3,<0.37.0"
+typing-extensions = ">=4.8.0"
+
+[package.extras]
+all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.7)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
 
 [[package]]
 name = "idna"
@@ -439,6 +478,34 @@ files = [
 ]
 
 [[package]]
+name = "sniffio"
+version = "1.3.1"
+description = "Sniff out which async library your code is running under"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
+    {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
+]
+
+[[package]]
+name = "starlette"
+version = "0.36.3"
+description = "The little ASGI library that shines."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "starlette-0.36.3-py3-none-any.whl", hash = "sha256:13d429aa93a61dc40bf503e8c801db1f1bca3dc706b10ef2434a36123568f044"},
+    {file = "starlette-0.36.3.tar.gz", hash = "sha256:90a671733cfb35771d8cc605e0b679d23b992f8dcfad48cc60b38cb29aeb7080"},
+]
+
+[package.dependencies]
+anyio = ">=3.4.0,<5"
+
+[package.extras]
+full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
+
+[[package]]
 name = "typing-extensions"
 version = "4.9.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -447,6 +514,24 @@ python-versions = ">=3.8"
 files = [
     {file = "typing_extensions-4.9.0-py3-none-any.whl", hash = "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"},
     {file = "typing_extensions-4.9.0.tar.gz", hash = "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783"},
+]
+
+[[package]]
+name = "unicorn"
+version = "2.0.1.post1"
+description = "Unicorn CPU emulator engine"
+optional = false
+python-versions = "*"
+files = [
+    {file = "unicorn-2.0.1.post1-py2.py3-none-macosx_10_15_x86_64.whl", hash = "sha256:2d3eb3ec7eabbc4e66b4d853e11b27c426ce03072860c756139ed2191588751c"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2b3eba8848f3cfd43ed5f3128f01880ecc4e73e6b36c1e5e951177db0fb9c03b"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-manylinux1_i686.whl", hash = "sha256:4cf11d4883160dd3c4967bb3187dd886cdca4422884b315ace436af6047aae0d"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:45be711d2bc8b82d07f2e0bdde128f3e9408c42978a3ed5edf709bce5350fcdf"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-manylinux1_x86_64.whl", hash = "sha256:5ed85a0b7bbfa47dd029272e071c814f21e9dacc2eefd63521f4d638ff1d6db9"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-manylinux2014_aarch64.whl", hash = "sha256:0bd05f9ae6b86b1326e6c3c1d1f3e51264b479cd1961388fd0da0ae674ec0195"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-win32.whl", hash = "sha256:9f0e3bbe207a6d2ddd3dff528bf3b2251c8e11d0fb4bab2338dff01475f6f41b"},
+    {file = "unicorn-2.0.1.post1-py2.py3-none-win_amd64.whl", hash = "sha256:7145fe448d17b2377b18e08e0521749cf0f94b9d3fe8b67c032bb4c932a21c29"},
+    {file = "unicorn-2.0.1.post1.tar.gz", hash = "sha256:7fc69523eb83b4c8abc7cb4410ca21875e066c34b7afe998f59481e830d28e56"},
 ]
 
 [[package]]
@@ -468,4 +553,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a9d497b534c4397bf3ebc353cb6c63c0a18413ff5c4e9f7a94caa9f478e52312"
+content-hash = "da30403c446046cf3086e742b880690084b2217b11cc15cfba3cac20675bf4e8"
