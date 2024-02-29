@@ -57,6 +57,9 @@ You may also execute a specific test-file in the test-suite using, e.g.,
 
 ```
 pytest test_datamodel.py
+
+Hvis ikke går, prøv : 
+poetry run pytest tests/test_database.py
 ```
 
 or running a specific test within a test-file using, e.g., 

@@ -65,7 +65,7 @@ class METClient(WeatherDataClient):
         parameters = {
             'types': 'SensorSystem',
             'elements': 'air_temperature,relative_humidity,wind_speed',
-            'geometry':  f'nearest(POINT({location.longitude} {location.latitude}))'}
+            'geometry': f'nearest(POINT({location.longitude} {location.latitude}))'}
 
         response = self.send_frost_request(self.sources_endpoint, parameters)
 
@@ -73,17 +73,16 @@ class METClient(WeatherDataClient):
 
     def get_nearest_station_id(self, location: Location) -> str:
 
-        # TODO: more error handling here
+        try:
+            frost_response = self.get_nearest_station_raw(location)
+            frost_response_str = frost_response.text
+            station_response = json.loads(frost_response_str)
+            station_id = station_response['data'][0]['id']
 
-        frost_response = self.get_nearest_station_raw(location)
+            return station_id
 
-        frost_response_str = frost_response.text
-
-        station_response = json.loads(frost_response_str)
-
-        station_id = station_response['data'][0]['id']
-
-        return station_id
+        except Exception as e:
+            return f'Error: {e}'
 
     @staticmethod
     def format_date(dt: datetime.datetime):
@@ -105,6 +104,7 @@ class METClient(WeatherDataClient):
 
         time_period = METClient.format_period(start, end)
 
+        "2024-02-21/2024-02-23"
         print(f'Fetch observation : {time_period}')
 
         parameters = {'sources': source,
@@ -118,15 +118,15 @@ class METClient(WeatherDataClient):
 
     def fetch_observations(self, location: Location, start: datetime.datetime, end: datetime.datetime) -> Observations:
 
-#        print(location)
+        #        print(location)
 
         station_id = self.get_nearest_station_id(location)
 
-#        print(station_id)
+        #        print(station_id)
 
         response = self.fetch_observations_raw(station_id, start, end)
 
-#        print(response.text)
+        #        print(response.text)
 
         observations = self.extractor.extract_observations(response.text, location)
 
