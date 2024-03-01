@@ -23,6 +23,9 @@ RUN /root/.local/bin/poetry install
 COPY src .
 COPY tests .
 
+# Run tests
+RUN /root/.local/bin/poetry run pytest
+
 # Copy the database initialization scripts
 COPY init.sql .
 
