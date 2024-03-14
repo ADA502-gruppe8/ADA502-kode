@@ -8,11 +8,15 @@ from frcm.datamodel.model import *
 
 class METExtractor(Extractor):
 
+    def __init__(self):
+        self.observations_created_at = None
+        self.forecast_updated_at = None
+
     def extract_observations(self, frost_response_str: str, location: Location) -> Observations:
 
         frost_response = json.loads(frost_response_str)
         data_list = frost_response['data']
-        created_at = frost_response['createdAt']
+        self.observations_created_at = dateutil.parser.parse(frost_response['createdAt'])
 
         weatherdatapoints = list()
 
@@ -65,7 +69,7 @@ class METExtractor(Extractor):
         met_response = json.loads(met_response_str)
 
         coordinates = met_response['geometry']['coordinates']
-        updated_at = met_response['properties']['meta']['updated_at']
+        self.forecast_updated_at = dateutil.parser.parse(met_response['properties']['meta']['updated_at'])
 
         latitude = coordinates[1]
         longitude = coordinates[0]
@@ -102,9 +106,11 @@ class METExtractor(Extractor):
 
         forecast = self.extract_forecast(met_response)
 
-        now = datetime.datetime.now()  # FIXME: date from each response should be used
+        # now = datetime.datetime.now()  # FIXME: date from each response should be used
 
-        weather_data = WeatherData(created=now,
+        weather_data_created_at = self.observations_created_at if self.observations_created_at > self.forecast_updated_at else self.forecast_updated_at
+
+        weather_data = WeatherData(created=weather_data_created_at,
                                    observations=observations,
                                    forecast=forecast)
 
