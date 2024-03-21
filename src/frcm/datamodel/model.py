@@ -1,33 +1,29 @@
 import datetime
-
 from pydantic import BaseModel
 
 
 class Location(BaseModel):
-
     latitude: float
     longitude: float
 
 
 class WeatherDataPoint(BaseModel):
-
     temperature: float
     humidity: float
     wind_speed: float
     timestamp: datetime.datetime
 
     def __str__(self):
-
         format_str = f'WeatherData[{self.timestamp}] {self.temperature, self.humidity, self.wind_speed}]'
 
         return format_str
 
 
 class Observations(BaseModel):
-
     source: str
     location: Location
     data: list[WeatherDataPoint]
+    created_at: datetime.datetime = None
 
     def __str__(self):
         format_str = f'Observations [Source: {self.source} @ Location: {self.location}]\n'
@@ -39,7 +35,7 @@ class Observations(BaseModel):
 
 
 class Forecast(BaseModel):
-
+    updated_at: datetime.datetime = None
     location: Location
     data: list[WeatherDataPoint]
 
@@ -53,7 +49,6 @@ class Forecast(BaseModel):
 
 
 class WeatherData(BaseModel):
-
     created: datetime.datetime
 
     observations: Observations
@@ -64,7 +59,6 @@ class WeatherData(BaseModel):
 
 
 class FireRisk(BaseModel):
-
     timestamp: datetime.datetime
     ttf: float
 
@@ -75,7 +69,6 @@ class FireRisk(BaseModel):
 
 
 class FireRiskPrediction(BaseModel):
-
     location: Location
     firerisks: list[FireRisk]
 

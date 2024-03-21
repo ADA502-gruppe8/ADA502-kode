@@ -8,15 +8,11 @@ from frcm.datamodel.model import *
 
 class METExtractor(Extractor):
 
-    def __init__(self):
-        self.observations_created_at = None
-        self.forecast_updated_at = None
-
     def extract_observations(self, frost_response_str: str, location: Location) -> Observations:
 
         frost_response = json.loads(frost_response_str)
         data_list = frost_response['data']
-        self.observations_created_at = dateutil.parser.parse(frost_response['createdAt'])
+        observations_created_at = dateutil.parser.parse(frost_response['createdAt'])
 
         weatherdatapoints = list()
 
@@ -60,7 +56,8 @@ class METExtractor(Extractor):
                 weatherdatapoints.append(wd_point)
 
         # TODO: maybe also source as part of the parameters - or extract weather data function instead
-        observations = Observations(source=source_id, location=location, data=weatherdatapoints)
+        observations = Observations(source=source_id, location=location, data=weatherdatapoints,
+                                    created_at=observations_created_at)
 
         return observations
 
@@ -69,7 +66,7 @@ class METExtractor(Extractor):
         met_response = json.loads(met_response_str)
 
         coordinates = met_response['geometry']['coordinates']
-        self.forecast_updated_at = dateutil.parser.parse(met_response['properties']['meta']['updated_at'])
+        forecast_updated_at = dateutil.parser.parse(met_response['properties']['meta']['updated_at'])
 
         latitude = coordinates[1]
         longitude = coordinates[0]
@@ -96,7 +93,7 @@ class METExtractor(Extractor):
 
             weatherdatapoints.append(wd_point)
 
-        forecast = Forecast(location=location, data=weatherdatapoints)
+        forecast = Forecast(location=location, data=weatherdatapoints, updated_at=forecast_updated_at)
 
         return forecast
 
@@ -108,7 +105,7 @@ class METExtractor(Extractor):
 
         # now = datetime.datetime.now()  # FIXME: date from each response should be used
 
-        weather_data_created_at = self.observations_created_at if self.observations_created_at > self.forecast_updated_at else self.forecast_updated_at
+        weather_data_created_at = observations.created_at if observations.created_at > forecast.updated_at else forecast.updated_at
 
         weather_data = WeatherData(created=weather_data_created_at,
                                    observations=observations,
