@@ -35,9 +35,9 @@ class Observations(BaseModel):
 
 
 class Forecast(BaseModel):
-    updated_at: datetime.datetime = None
     location: Location
     data: list[WeatherDataPoint]
+    updated_at: datetime.datetime = None
 
     def __str__(self):
         format_str = f'Forecast @ Location: {self.location}\n'
