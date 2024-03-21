@@ -103,12 +103,17 @@ class METExtractor(Extractor):
 
         forecast = self.extract_forecast(met_response)
 
-        # now = datetime.datetime.now()  # FIXME: date from each response should be used
+        now = datetime.datetime.now()  # FIXME: date from each response should be used
+        wd_created_at = now
+        o_created_at = observations.created_at
+        f_updated_at = forecast.updated_at
 
-        weather_data_created_at = observations.created_at if observations.created_at > forecast.updated_at else forecast.updated_at
+        try:
+            wd_created_at = o_created_at if o_created_at > f_updated_at else f_updated_at
+        except:
+            pass
 
-        weather_data = WeatherData(created=weather_data_created_at,
+        weather_data = WeatherData(created=wd_created_at,
                                    observations=observations,
                                    forecast=forecast)
-
         return weather_data
