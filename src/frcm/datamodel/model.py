@@ -23,7 +23,6 @@ class Observations(BaseModel):
     source: str
     location: Location
     data: list[WeatherDataPoint]
-    created_at: datetime.datetime = None
 
     def __str__(self):
         format_str = f'Observations [Source: {self.source} @ Location: {self.location}]\n'
@@ -37,7 +36,6 @@ class Observations(BaseModel):
 class Forecast(BaseModel):
     location: Location
     data: list[WeatherDataPoint]
-    updated_at: datetime.datetime = None
 
     def __str__(self):
         format_str = f'Forecast @ Location: {self.location}\n'

@@ -12,7 +12,6 @@ class METExtractor(Extractor):
 
         frost_response = json.loads(frost_response_str)
         data_list = frost_response['data']
-        observations_created_at = dateutil.parser.parse(frost_response['createdAt'])
 
         weatherdatapoints = list()
 
@@ -56,8 +55,7 @@ class METExtractor(Extractor):
                 weatherdatapoints.append(wd_point)
 
         # TODO: maybe also source as part of the parameters - or extract weather data function instead
-        observations = Observations(source=source_id, location=location, data=weatherdatapoints,
-                                    created_at=observations_created_at)
+        observations = Observations(source=source_id, location=location, data=weatherdatapoints)
 
         return observations
 
@@ -66,7 +64,6 @@ class METExtractor(Extractor):
         met_response = json.loads(met_response_str)
 
         coordinates = met_response['geometry']['coordinates']
-        forecast_updated_at = dateutil.parser.parse(met_response['properties']['meta']['updated_at'])
 
         latitude = coordinates[1]
         longitude = coordinates[0]
@@ -93,7 +90,7 @@ class METExtractor(Extractor):
 
             weatherdatapoints.append(wd_point)
 
-        forecast = Forecast(location=location, data=weatherdatapoints, updated_at=forecast_updated_at)
+        forecast = Forecast(location=location, data=weatherdatapoints)
 
         return forecast
 
@@ -103,17 +100,9 @@ class METExtractor(Extractor):
 
         forecast = self.extract_forecast(met_response)
 
-        now = datetime.datetime.now()  # FIXME: date from each response should be used
-        wd_created_at = now
-        o_created_at = observations.created_at
-        f_updated_at = forecast.updated_at
+        now = datetime.datetime.now()
 
-        try:
-            wd_created_at = o_created_at if o_created_at > f_updated_at else f_updated_at
-        except:
-            pass
-
-        weather_data = WeatherData(created=wd_created_at,
+        weather_data = WeatherData(created=now,
                                    observations=observations,
                                    forecast=forecast)
         return weather_data
