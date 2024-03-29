@@ -1,7 +1,7 @@
 name: Test Workflow
 
 on:
-  workflow_dispatch:
+  push:
     branches:
       - yosafe_branch
 
@@ -9,8 +9,37 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Get Code
         uses: actions/checkout@v4
-      - name: Run tests
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+
+#      - name: Cache dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: .venv
+#          key: venv-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install the project dependencies
+        run: poetry install
+
+      - name:  Run the automated tests
+        run: poetry run pytest -v
+
+  fauilue:
+    needs: test
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output test report
         run: |
-          echo "Running tests..."
+          echo "Something went wrong"
+          echo "${{ toJson(github) }}"
+
+
