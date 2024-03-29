@@ -20,6 +20,8 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    outputs:
+      test-result: ${{ steps.test-report.outputs.test-result }}
     steps:
       - name: Get Code
         uses: actions/checkout@v4
@@ -47,13 +49,18 @@ jobs:
           key: venv-${{ hashFiles('poetry.lock') }}
 
       - name: Install the project dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: poetry install
 
       - name: Run the automated tests
+        continue-on-error: true
+        id: run-test
         run: poetry run pytest -v
 
       - name: test report
-        run: echo "report=TEST SUCCEDED"
+        id: test-report
+        if: failure() && steps.run-test.outcome == 'failure'
+        run: echo "test-result=failed" >> $GITHUB_OUTPUT
 
   fauilue:
     needs: test
@@ -66,3 +73,10 @@ jobs:
           echo "${{ toJson(github) }}"
 
 
+  result:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output test report
+        run: |
+          echo 'test resul: ${{ needs.test.outputs.test-result }}
