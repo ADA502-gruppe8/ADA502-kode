@@ -1,5 +1,9 @@
 name: Test Workflow
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - yosafe_branch
+
 jobs:
   test:
     runs-on: ubuntu-latest
