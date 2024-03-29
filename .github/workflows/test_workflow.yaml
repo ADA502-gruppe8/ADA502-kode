@@ -6,7 +6,7 @@ on:
       - yosafe_branch
 
 env:
-  POSTGRES_DB: frcm
+  POSTGRES_DB_NAME: frcm
   MET_CLIENT_ID: ${{ secrets.MET_CLIENT_ID }}
   MET_CLIENT_SECRET: ${{ secrets.MET_CLIENT_SECRET }}
 
