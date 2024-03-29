@@ -79,4 +79,4 @@ jobs:
     steps:
       - name: Output test report
         run: |
-          echo 'test resul: ${{ needs.test.outputs.test-result }}
+          echo 'test result: ${{ needs.test.outputs.test-result }} '
