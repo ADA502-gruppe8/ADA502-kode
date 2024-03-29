@@ -8,8 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: python:latest
+#    container:
+#      image: python:latest
     services:
       postgres:
         image: postgres:latest
@@ -23,9 +23,6 @@ jobs:
     outputs:
       test-result: ${{ steps.test-report.outputs.test-result }}
     steps:
-
-      - name: Modify hosts file
-        run: echo "127.0.0.1 postgres" | sudo tee -a /etc/hosts
 
       - name: Get Code
         uses: actions/checkout@v4
