@@ -18,7 +18,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: frcma
+          POSTGRES_DB: frcm
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
