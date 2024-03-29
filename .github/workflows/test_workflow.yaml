@@ -29,6 +29,10 @@ jobs:
       test-result: ${{ steps.test-report.outputs.test-result }}
 
     steps:
+
+      - name: Modify hosts file # i want error here
+        run: echo "127.0.0.1 postgres" | sudo tee -a /etc/hosts
+
       - name: Get Code
         uses: actions/checkout@v4
 
