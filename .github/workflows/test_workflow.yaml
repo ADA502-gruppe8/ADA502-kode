@@ -15,7 +15,7 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 123456aa
+          POSTGRES_PASSWORD: 123456a
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
@@ -58,14 +58,14 @@ jobs:
         run: poetry run pytest -v
 
       - name: test report failed
-        id: test-report
+        #id: test-report
         if: failure() && steps.run-test.outcome == 'failure'
-        run: echo "test-result=failed" >> $GITHUB_OUTPUT
+        run: echo "test-result=failed" #>> $GITHUB_OUTPUT
 
       - name: test report success
-        id: test-report
+        #id: test-report
         if: success() && steps.run-test.outcome == 'success'
-        run: echo "test-result=success" >> $GITHUB_OUTPUT
+        run: echo "test-result=success" #>> $GITHUB_OUTPUT
 
   fauilue:
     needs: test
@@ -74,14 +74,14 @@ jobs:
     steps:
       - name: Output test report
         run: |
-          echo 'test result: ${{ needs.test.outputs.test-result }}'
+          echo 'Test Failed!'
 
 
-  result:
+  success:
     needs: test
     if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Output test report
         run: |
-          echo 'test result: ${{ needs.test.outputs.test-result }}'
+          echo 'Test Succeeded!'
