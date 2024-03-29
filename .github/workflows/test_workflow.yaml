@@ -8,8 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-#    container:
-#      image: python:latest
+    #    container:
+    #      image: python:latest
     services:
       postgres:
         image: postgres:latest
@@ -35,17 +35,20 @@ jobs:
       - name: Install Poetry
         uses: abatilo/actions-poetry@v2
 
-#      - name: Cache dependencies
-#        uses: actions/cache@v4
-#        with:
-#          path: .venv
-#          key: venv-${{ hashFiles('**/poetry.lock') }}
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install the project dependencies
         run: poetry install
 
-      - name:  Run the automated tests
+      - name: Run the automated tests
         run: poetry run pytest -v
+
+      - name: test report
+        run: echo "report=TEST SUCCEDED"
 
   fauilue:
     needs: test
