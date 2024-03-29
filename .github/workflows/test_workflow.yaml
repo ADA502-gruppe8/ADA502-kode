@@ -25,6 +25,9 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+    outputs:
+      test-result: ${{ steps.test-report.outputs.test-result }}
+
     steps:
       - name: Get Code
         uses: actions/checkout@v4
@@ -61,13 +64,11 @@ jobs:
         run: poetry run pytest -v
 
       - name: test report failed
-        id: test-result
+        id: test-report
         if: failure() && steps.run-test.outcome == 'failure'
-        run: echo "test-result-failed=failed"
+        # maybe download error log file here
+        run: echo "test-result=FAILED" >> $GITHUB_OUTPUT
 
-      - name: test report success
-        if: success() && steps.run-test.outcome == 'success'
-        run: echo "test-result=success"
 
   test-fauilur:
     needs: test
@@ -76,12 +77,21 @@ jobs:
     steps:
       - name: Output test report
         run: |
-          echo 'Test Failed!'
+          echo 'Test : ${{ needs.outputs.test-result }}!'
 
 
+
+  test-success:
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output test report
+        run: |
+          echo 'Test Passed!'
 
   deploy:
-    needs: test
+    needs: test-success
     if: success()
     runs-on: ubuntu-latest
     steps:
