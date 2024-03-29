@@ -7,6 +7,8 @@ on:
 
 env:
   POSTGRES_DB: postgres
+  MET_CLIENT_ID: ${{ secrets.MET_CLIENT_ID }}
+  MET_CLIENT_SECRET: ${{ secrets.MET_CLIENT_SECRET }}
 
 jobs:
   test:
