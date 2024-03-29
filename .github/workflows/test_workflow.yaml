@@ -6,7 +6,6 @@ on:
       - yosafe_branch
 
 env:
-  POSTGRES_DB_NAME: frcm
   MET_CLIENT_ID: ${{ secrets.MET_CLIENT_ID }}
   MET_CLIENT_SECRET: ${{ secrets.MET_CLIENT_SECRET }}
 
@@ -19,6 +18,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
+          POSTGRES_DB: frcm
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
