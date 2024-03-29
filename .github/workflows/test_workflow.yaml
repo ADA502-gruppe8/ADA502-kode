@@ -24,7 +24,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres
+          POSTGRES_DB: postgress
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
@@ -78,7 +78,9 @@ jobs:
         id: test-report
         if: failure() && steps.run-test.outcome == 'failure'
         # maybe download error log file here
-        run: echo "test-result=FAILED" >> $GITHUB_OUTPUT
+        run: |
+          echo "downloading failed test log-file/artifact..."
+          echo "test-result=FAILED" >> $GITHUB_OUTPUT
 
 
   test-failure:
