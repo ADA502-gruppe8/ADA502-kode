@@ -14,8 +14,8 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        python-version: [ 3.11, 3.12 ]
-        poetry-version: [ 1.7.0,1.8.2 ]
+        #        python-version: [ 3.12 ]
+        #        poetry-version: [ 1.7.0,1.8.2 ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     #    container:
@@ -43,15 +43,16 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.x'
+      #          python-version: ${{ matrix.python-version }}
 
       - name: python version
         run: python --version
 
       - name: Install Poetry
         uses: abatilo/actions-poetry@v2
-        with:
-          version: ${{ matrix.poetry-version }}
+      #        with:
+      #          version: ${{ matrix.poetry-version }}
 
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
