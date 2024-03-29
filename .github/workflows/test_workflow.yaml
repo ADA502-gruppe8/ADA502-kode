@@ -72,14 +72,14 @@ jobs:
         run: echo "test-result=FAILED" >> $GITHUB_OUTPUT
 
 
-  test-fauilur:
+  test-failure:
     needs: test
     if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Output test report
         run: |
-          echo 'Test : ${{ needs.outputs.test-result }}!'
+          echo 'Test : ${{ needs.test-failure.outputs.test-result }}!'
 
 
 
