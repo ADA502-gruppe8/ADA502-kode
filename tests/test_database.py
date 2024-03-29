@@ -5,7 +5,7 @@ class TestDatabaseConnection(unittest.TestCase):
     def test_database(self):
         conn_params = {
             'host': 'postgres',
-            'database': 'frcm',
+            'database': 'postgres',
             'port':  5432,
             'user': 'postgres',
             'password': '123456aa'
