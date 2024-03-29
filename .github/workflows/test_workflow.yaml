@@ -8,8 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-#    container:
-#      image: python:latest
+    #    container:
+    #      image: python:latest
     services:
       postgres:
         image: postgres:latest
@@ -25,16 +25,16 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v4
 
-      #      - name: Install Python
-      #        uses: actions/setup-python@v5
-      #        with:
-      #          python-version: '3.x'
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
       - name: python version
         run: python --version
 
-#      - name: Install Poetry
-#        uses: abatilo/actions-poetry@v2
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
 
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
