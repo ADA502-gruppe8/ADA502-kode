@@ -38,7 +38,7 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
-          path: .venv
+          path: ./.venv
           key: venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install the project dependencies
