@@ -79,7 +79,7 @@ jobs:
     steps:
       - name: Output test report
         run: |
-          echo 'Test : ${{ needs.test-failure.outputs.test-result }}!'
+          echo 'Test : ${{ needs.test.outputs.test-result }}!'
 
 
 
