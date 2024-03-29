@@ -11,7 +11,7 @@ jobs:
     container:
       image: python:latest
     services:
-      127.0.0.1:
+      postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
@@ -23,13 +23,17 @@ jobs:
     outputs:
       test-result: ${{ steps.test-report.outputs.test-result }}
     steps:
+
+      - name: Modify hosts file
+        run: echo "127.0.0.1 postgres" | sudo tee -a /etc/hosts
+
       - name: Get Code
         uses: actions/checkout@v4
 
-#      - name: Install Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: '3.x'
+      #      - name: Install Python
+      #        uses: actions/setup-python@v5
+      #        with:
+      #          python-version: '3.x'
 
       - name: python version
         run: python --version
@@ -75,17 +79,9 @@ jobs:
           echo 'Test Failed!'
 
 
-  test-success:
-    needs: test
-    if: success()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output test report
-        run: |
-          echo 'Test Succeeded!'
 
   deploy:
-    needs: test-success
+    needs: test
     if: success()
     runs-on: ubuntu-latest
     steps:
