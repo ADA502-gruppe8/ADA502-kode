@@ -77,9 +77,7 @@ jobs:
         id: test-report
         if: failure() && steps.run-test.outcome == 'failure'
         # maybe download error log file here
-        run: |
-          echo "downloading failed test log-file/artifact..."
-          echo "test-result=FAILED" >> $GITHUB_OUTPUT
+        run: echo "test-result=FAILED" >> $GITHUB_OUTPUT
 
 
   test-failure:
