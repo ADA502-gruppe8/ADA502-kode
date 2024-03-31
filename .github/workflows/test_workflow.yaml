@@ -21,7 +21,7 @@ jobs:
     container:
       image: python:latest
     services:
-      p:
+      postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
