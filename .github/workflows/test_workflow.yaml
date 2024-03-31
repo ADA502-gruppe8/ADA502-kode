@@ -18,10 +18,10 @@ jobs:
         #        poetry-version: [ 1.7.0,1.8.2 ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-    #    container:
-    #      image: python:latest
+    container:
+      image: python:latest
     services:
-      postgres:
+      p:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
