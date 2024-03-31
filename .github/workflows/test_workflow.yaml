@@ -18,8 +18,8 @@ jobs:
         #        poetry-version: [ 1.7.0,1.8.2 ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-    container:
-      image: python:latest
+#    container:
+#      image: python:latest
 
     services:
       postgres_host:
@@ -40,11 +40,11 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v4
 
-#      - name: Install Python
-#        uses: actions/setup-python@v5
-#        with:
-#          #python-version: '3.x'
-#          python-version: ${{ matrix.python-version }}
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          #python-version: '3.x'
+          python-version: ${{ matrix.python-version }}
 
       - name: python version
         run: python --version
