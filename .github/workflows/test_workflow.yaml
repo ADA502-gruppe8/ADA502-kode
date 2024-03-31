@@ -20,8 +20,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     container:
       image: python:latest
+
     services:
-      postgres:
+      po:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
