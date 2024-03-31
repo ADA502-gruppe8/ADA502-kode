@@ -4,7 +4,7 @@ import unittest
 class TestDatabaseConnection(unittest.TestCase):
     def test_database(self):
         conn_params = {
-            'host': 'po',
+            'host': 'postgres_host',
             'database': 'postgres',
             'port':  5432,
             'user': 'postgres',
