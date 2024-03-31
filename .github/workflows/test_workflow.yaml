@@ -22,7 +22,7 @@ jobs:
       image: python:latest
 
     services:
-      po:
+      my_name_is_postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
