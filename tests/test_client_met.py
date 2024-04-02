@@ -26,7 +26,7 @@ class TestClient(unittest.TestCase):
 
         print(response.text)
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
 
     def test_fetch_forecast(self):
 
