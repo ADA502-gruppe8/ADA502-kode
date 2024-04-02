@@ -40,7 +40,7 @@ class TestClient(unittest.TestCase):
 
         response = self.client.get_nearest_station_raw(self.location)
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
 
     def test_get_nearest_station_id(self):
 
