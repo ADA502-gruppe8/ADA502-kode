@@ -11,15 +11,15 @@ env:
 
 jobs:
   test:
-
     strategy:
       matrix:
-        python-version: [ "3.10", "3.11", "3.12", "3.x" ]
-        poetry-version: [ 1.7.0,1.8.2 ]
+        python-version: [ "3.10", "3.11", "3.x" ]
+        poetry-version: [ "1.7.0","1.8.2" ]
         os: [ ubuntu-latest ]
+
     runs-on: ${{ matrix.os }}
-#    container:
-#      image: python:latest
+    #    container:
+    #      image: python:latest
 
     services:
       postgres_host:
@@ -35,8 +35,6 @@ jobs:
       test-result: ${{ steps.test-report.outputs.test-result }}
 
     steps:
-
-
       - name: Get Code
         uses: actions/checkout@v4
 
@@ -59,15 +57,11 @@ jobs:
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
+        # custom cache action
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cache-action
         with:
-          path: ./.venv
-          key: venv-${{ hashFiles('poetry.lock') }}
-
-      - name: Install the project dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: poetry install
+          caching: 'true'
 
       - name: Run the automated tests
         # continue-on-error: true
@@ -91,22 +85,21 @@ jobs:
       - name: Output test report
         run: |
           echo 'Result ...'
-          echo 'Test : ${{ needs.test.outputs.test-result }}!'
+          echo 'Tests : ${{ needs.test.outputs.test-result }}!'
 
 
 
-  test-success:
+  build:
     needs: test
-    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Output test report
         run: |
-          echo 'Test Passed!'
+          echo 'Tests Passed!'
+          echo 'Building the project...!'
 
   deploy:
-    needs: test-success
-    if: success()
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Output test report
