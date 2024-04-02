@@ -38,24 +38,30 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v4
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Install Python and Poetry
+        uses: ./.github/actions/python-poetry-installation-action
         with:
-          #python-version: '3.x'
           python-version: ${{ matrix.python-version }}
+          poetry-version: ${{ matrix.poetry-version }}
 
-      - name: python version
-        run: python --version
-
-      - name: Install Poetry
-        uses: abatilo/actions-poetry@v2
-        with:
-          version: ${{ matrix.poetry-version }}
-
-      - name: Setup a local virtual environment (if no poetry.toml file)
-        run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
+#      - name: Install Python
+#        uses: actions/setup-python@v5
+#        with:
+#          #python-version: '3.x'
+#          python-version: ${{ matrix.python-version }}
+#
+#      - name: python version
+#        run: python --version
+#
+#      - name: Install Poetry
+#        uses: abatilo/actions-poetry@v2
+#        with:
+#          version: ${{ matrix.poetry-version }}
+#
+#      - name: Setup a local virtual environment (if no poetry.toml file)
+#        run: |
+#          poetry config virtualenvs.create true --local
+#          poetry config virtualenvs.in-project true --local
 
         # custom cache action
       - name: Load & Cache dependencies

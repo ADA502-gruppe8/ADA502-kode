@@ -1,0 +1,35 @@
+name: 'Install python and poetry'
+description: 'Installing python and poetry.'
+inputs:
+  python-version:
+      description: 'The python version to install.'
+      required: false
+      default: '3.x'
+  poetry-version:
+      description: 'The poetry version to install.'
+      required: false
+      default: '1.8.2'
+
+runs:
+    using: 'composite'
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          #python-version: '3.x'
+          python-version: ${{ inputs.python-version }}
+
+      - name: python version
+        run: python --version
+        shell: bash
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          version: ${{ inputs.poetry-version }}
+
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+        shell: bash
