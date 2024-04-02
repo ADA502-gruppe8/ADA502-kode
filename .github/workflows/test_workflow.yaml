@@ -59,7 +59,7 @@ jobs:
 
         # custom cache action
       - name: Load & Cache dependencies
-        uses: ./.github/actions/cache-action
+        uses: ./.github/actions/cache-custom-action
         with:
           caching: 'true'
 
