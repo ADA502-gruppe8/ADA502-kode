@@ -6,13 +6,13 @@ CREATE DATABASE IF NOT EXISTS frmc;
 
 -- Create the frcm table with columns defined with TIMESTAMP datatype for "dato" column and "tid" column
 CREATE TABLE IF NOT EXISTS frcm (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     lokasjon TEXT,
     dato DATE,
     tid TIMESTAMP,
-    temp NUMERIC(10, 2),
-    fuktighet NUMERIC(10, 2),
-    vind NUMERIC(10, 2),
-    regnfall NUMERIC(10, 2),
-    firerisk NUMERIC(10, 2)
+    temp NUMERIC(4, 2),
+    fuktighet NUMERIC(4, 2),
+    vind NUMERIC(4, 2),
+    regnfall NUMERIC(4, 2),
+    firerisk NUMERIC(4, 2)
 );
