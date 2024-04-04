@@ -1,16 +1,18 @@
--- Create the frmc database
-CREATE DATABASE frmc IF NOT EXISTS frmc;
+-- Create the frmc database if it does not exist
+CREATE DATABASE IF NOT EXISTS frmc;
 
 -- Connect to the frmc database
-\c frcm;
+\c frmc;
 
+-- Create the frcm table with columns defined with TIMESTAMP datatype for "dato" column and "tid" column
 CREATE TABLE IF NOT EXISTS frcm (
     id INTEGER PRIMARY KEY,
     lokasjon TEXT,
-    dato TEXT,
-    temp REAL,
-    fuktighet REAL,
-    vind REAL,
-    regnfall REAL,
-    firerisk REAL
+    dato DATE,
+    tid TIMESTAMP,
+    temp NUMERIC(10, 2),
+    fuktighet NUMERIC(10, 2),
+    vind NUMERIC(10, 2),
+    regnfall NUMERIC(10, 2),
+    firerisk NUMERIC(10, 2)
 );
