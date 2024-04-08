@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location Input</title>
+</head>
+<body>
+    <h1>Enter your location</h1>
+    <button id="get-gps">Get GPS Location</button>
+    <p id="gps-info"></p>
+    <form id="location-form" action="/location" method="post">
+        <label for="location">Enter your location:</label><br>
+        <input type="text" id="location" name="location"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        // Get GPS location button
+        const getGpsButton = document.querySelector("#get-gps");
+        const gpsInfo = document.querySelector("#gps-info");
+
+        // Get form
+        const locationForm = document.querySelector("#location-form");
+
+        // Get GPS location
+        getGpsButton.addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    gpsInfo.innerHTML = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                    gpsInfo.style.display = "";
+
+                    // Fill in the form with the GPS location
+                    const locationInput = document.querySelector("#location");
+                    locationInput.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+                });
+            } else {
+                gpsInfo.innerHTML = "Geolocation is not supported by this browser.";
+                gpsInfo.style.display = "";
+            }
+        });
+
+        // Submit form
+        locationForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const locationInput = document.querySelector("#location");
+            const location = locationInput.value;
+
+            // Send location to server
+            console.log(`Submitted location: ${location}`);
+        });
+    </script>
+</body>
+</html>
