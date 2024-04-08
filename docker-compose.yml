@@ -1,25 +1,21 @@
-version: '3.0'
+version: '3.9'
 services:
-  app:
-    build: .
-    environment:
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USERNAME=${DATABASE_USERNAME}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-    ports:
-      - "8080:80"  # Map port 8080 on the host to port 80 in the container
-    depends_on:
-      - db
   db:
-    image: postgres
-    container_name: ${DATABASE_NAME}
+    image: postgres:latest
     restart: always
     environment:
-      POSTGRES_NAME: ${DATABASE_NAME}
-      POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - ./data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Map the init.sql file
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "5555:5432"
+  app:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 5000:5000
+    restart: always

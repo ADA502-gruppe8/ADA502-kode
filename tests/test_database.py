@@ -20,5 +20,6 @@ class TestDatabaseConnection(unittest.TestCase):
             print("Error:", e)
             self.fail(f"Failed to connect to the database: {str(e)}")  # Use self.fail() to indicate a test failure
 
+
 if __name__ == '__main__':
     unittest.main()
