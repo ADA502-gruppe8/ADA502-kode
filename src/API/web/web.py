@@ -5,9 +5,29 @@ from fastapi.templating import Jinja2Templates
 app = FastAPI()
 templates = Jinja2Templates(directory="API/web/templates")
 
+
+# Dummy function for hashing a password
+def hash_password(password: str) -> str:
+    return "hashed_" + password 
+
 @app.get("/", response_class=HTMLResponse)
 def get_login_page(request: Request, msg: str = None):
     return templates.TemplateResponse("login.html", {"request": request})
+
+@app.post("/make-user")
+async def make_user(username: str = Form(...), password: str = Form(...)):
+    hashed_password = hash_password(password)
+    # Assuming '2' is the ID for 'user' role in your database
+    role_id = 2
+    # Insert the new user with the user role into the database
+    try:
+        # Your database query to insert a new user goes here.
+        # Replace the next line with your actual database operation
+        # e.g., await database.execute(query, values={"username": username, "hashed_password": hashed_password, "role_id": role_id})
+        pass  # Placeholder for the actual database insert operation
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Could not create user: {str(e)}")
+    return RedirectResponse(url="/login", status_code=303)  # Redirecting to the login page after successful registration
 
 @app.post("/login")
 async def form_login(request: Request, username: str = Form(...), password: str = Form(...)):  # Added request: Request here

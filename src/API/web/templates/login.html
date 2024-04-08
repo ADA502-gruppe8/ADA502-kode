@@ -4,6 +4,7 @@
     <title>Login Page</title>
 </head>
 <body>
+    <h1> LOGIN </h1>
     <form action="/login" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username"><br>
@@ -11,5 +12,18 @@
         <input type="password" id="password" name="password"><br>
         <input type="submit" value="Login">
     </form>
+
+
+    <h2> Register </h2>
+
+    <form action="/make-user" method="post">
+        <label for="new_username">Username:</label><br>
+        <input type="text" id="new_username" name="username" required><br>
+        <label for="new_password">Password:</label><br>
+        <input type="password" id="new_password" name="password" required><br>
+        <input type="submit" value="Create User">
+    </form>
+
+
 </body>
 </html>
