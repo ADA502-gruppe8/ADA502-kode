@@ -51,8 +51,7 @@ CREATE TABLE IF NOT EXISTS roles (
 
 -- Create a table for users with a foreign key reference to the roles table
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) PRIMARY KEY,
     password_hash VARCHAR(255) NOT NULL,
     role_id INTEGER NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id)
