@@ -11,6 +11,33 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+import psycopg2
+from psycopg2 import OperationalError
+from typing import Optional
+from typing import Optional, Tuple
+
+def open_connection(host: str = 'localhost', port: str = '5555', database: str = 'login') -> Optional[psycopg2.extensions.connection]:
+    try:
+        connection = psycopg2.connect(
+            host=host,
+            port=port,
+            database=database
+        )
+        print("Connection to the database successful")
+        return connection
+    
+    except OperationalError as e:
+        print("The error occurred while connecting to the database:", e)
+        return None
+
+# Correct the close connection function for psycopg2
+def close_connection(connection: psycopg2.extensions.connection):
+    try:
+        connection.close()
+        print("Connection to the database closed")
+    except Exception as error:  # Adjusted to catch a broader range of potential errors
+        print("Error while closing the database connection", error)
+        raise error
 
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
@@ -26,11 +53,15 @@ def authenticate_user(username: str, password: str) -> User:
         return None
     return user
 
-
-def get_user_by_username(username: str) -> User:
-    # Your database query to fetch user by username goes here
-    pass
-
+# Adjust the get user by username function for psycopg2 and PostgreSQL syntax
+def get_user_by_username(connection: psycopg2.extensions.connection, username: str) -> Optional[Tuple[str, str]]:
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT username, password FROM users WHERE username = %s", (username,))
+        user = cursor.fetchone()
+        return user
+    finally:
+        cursor.close()  # Ensure the cursor is closed after operation
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
