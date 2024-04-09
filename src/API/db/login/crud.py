@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
+import auth as auth
 from .models import User
 
 SECRET_KEY = "your-secret-key"
@@ -10,11 +11,12 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
+# Bruker registerer med email & ønsket passord
 def create_user(db: Session, user: User):
     db.add(user)
     db.commit()
     db.refresh(user)
+    auth.authenticate_user()
 
 
 def authenticate_user(db: Session, username: str, password: str) -> User:
@@ -23,13 +25,11 @@ def authenticate_user(db: Session, username: str, password: str) -> User:
         return None
     return user
 
-
 def delete_user(db: Session, username: str):
     user = db.query(User).filter(User.username == username).first()
     if user:
         db.delete(user)
         db.commit()
-
 
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
@@ -38,10 +38,8 @@ def create_access_token(data: dict) -> str:
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
-
 
 def get_password_hash(password):
     return pwd_context.hash(password)
