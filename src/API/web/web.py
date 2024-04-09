@@ -1,14 +1,18 @@
 from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from API.db.conDeconDb import Database
+from passlib.context import CryptContext
 
 app = FastAPI()
 templates = Jinja2Templates(directory="API/web/templates")
 
+# Create a password context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Dummy function for hashing a password
+# Function to hash a password
 def hash_password(password: str) -> str:
-    return "hashed_" + password 
+    return pwd_context.hash(password)
 
 @app.get("/", response_class=HTMLResponse)
 def get_login_page(request: Request, msg: str = None):
@@ -17,17 +21,23 @@ def get_login_page(request: Request, msg: str = None):
 @app.post("/make-user")
 async def make_user(username: str = Form(...), password: str = Form(...)):
     hashed_password = hash_password(password)
-    # Assuming '2' is the ID for 'user' role in your database
-    role_id = 2
-    # Insert the new user with the user role into the database
+    # Update the DSN with your actual database connection string details
+    DSN = "dbname=login user=postgres password=123456aa host=host.docker.internal port=5555"
+    db = Database(DSN)
+
     try:
-        # Your database query to insert a new user goes here.
-        # Replace the next line with your actual database operation
-        # e.g., await database.execute(query, values={"username": username, "hashed_password": hashed_password, "role_id": role_id})
-        pass  # Placeholder for the actual database insert operation
+        role_id = 2  # Assuming role_id 2 is for standard users
+        db.cursor.execute('''
+            INSERT INTO users (username, password_hash, role_id) VALUES (%s, %s, %s)
+        ''', (username, hashed_password, role_id))
+        db.conn.commit()
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Could not create user: {str(e)}")
-    return RedirectResponse(url="/login", status_code=303)  # Redirecting to the login page after successful registration
+        print(f"An error occurred: {e}")
+    finally:
+        db.close()
+    
+    # Assuming you have a template named 'location.html' in your 'templates' directory
+    return RedirectResponse(url="/location", status_code=303)
 
 @app.post("/login")
 async def form_login(request: Request, username: str = Form(...), password: str = Form(...)):  # Added request: Request here
@@ -64,3 +74,7 @@ def show_data(request: Request):
         ]
     }
     return templates.TemplateResponse("show_data.html", {"request": request, "data": data})
+
+@app.get("/my-page", response_class=HTMLResponse)
+async def get_my_page(request: Request):
+    return templates.TemplateResponse("my_page.html", {"request": request})
