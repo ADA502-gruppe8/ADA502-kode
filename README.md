@@ -37,7 +37,7 @@ Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 
 ## .env fil
 
-.env filen mpå opprettes, og innholde disse feltene
+.env filen må opprettes, og innholde disse feltene
 Du må fylle ut linje 2 og 3 med dine data.
 
 DATABASE_HOST = 'localhost'
