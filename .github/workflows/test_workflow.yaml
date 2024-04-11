@@ -37,12 +37,13 @@ jobs:
         uses: ./.github/actions/python-poetry-installation-action
         with:
           python-version: 3.12
+          poetry-version: latest
 
         # custom cache action
-      - name: Load & Cache dependencies
-        uses: ./.github/actions/cache-custom-action
-        with:
-          caching: 'true'
+#      - name: Load & Cache dependencies
+#        uses: ./.github/actions/cache-custom-action
+#        with:
+#          caching: 'true'
 
       - name: Run the automated tests
         # continue-on-error: true
