@@ -32,7 +32,6 @@ Det burde nå være en struktur som følger med mappene:
 Resten av filene
 
 Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så hopp over denne linjen.
-KAN VI SLETTE DEN MAPPEN SIMEN? - skipper initialization!
 
 Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 
