@@ -63,6 +63,8 @@ docker compose up
 Dette starter docker container, som inneholder 2 sub conteinere
 - En for web app, og en for database
 
+Det vil dukke opp en folder "data", som vil være databasen, og lagd i prosjektet
+
 ## Docker
 
 Etter å kjørt dokcer compose build/up, burde man finne dette inne i docker desktop
