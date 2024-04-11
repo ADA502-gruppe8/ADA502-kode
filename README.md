@@ -107,6 +107,8 @@ Du ser forskjellen i siste linje mellom login og firerisk i bildene under.
 
 Webappen kjører og du skal finne den på "[localhost:5000](http://localhost:5000/)"
 
+Når du kjører appen så kommer den med "Uvicorn running on http://0.0.0.0:5000" , men du må bruke (http://localhost:5000/)
+
 Der vil du komme til ulike interface
 
 Den vil kunne kjøre mellom de ulik nettsidene.
@@ -120,6 +122,6 @@ Begge disse vil gi deg resultatsiden, som ikke viser noe data enda.
 
 Dette fordi vi ikke har gjort ferdig denne delen av logikken.
 
-Du kan alltid slette brukeren.
+Du kan alltid slette brukeren, men slettes ikke nå i databasen. 
 
 Håper alt fungerte! 

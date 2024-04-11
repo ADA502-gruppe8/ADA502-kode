@@ -10,7 +10,7 @@ from frcm.datamodel.model import Location
 # sample code illustrating how to use the Fire Risk Computation API (FRCAPI)
 if __name__ == "__main__":
 
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="localhost", port=5000)
 
     met_extractor = METExtractor()
 
