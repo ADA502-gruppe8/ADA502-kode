@@ -16,30 +16,17 @@ runs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          #python-version: '3.x'
+          #python-version: '3.12'
           python-version: ${{ inputs.python-version }}
 
       - name: python version
         run: python --version
         shell: bash
 
-#      - name: Install Poetry
-#        uses: abatilo/actions-poetry@v2
-#        with:
-#          version: ${{ inputs.poetry-version }}
-
-      - run: |
-          pip install --user pipx
-          pipx ensurepath
-        shell: bash
-      - if: ${{ inputs.poetry-version == 'latest' }}
-        run: |
-          pipx install poetry
-        shell: bash
-      - if: ${{ inputs.poetry-version != 'latest' }}
-        run: |
-          pipx install poetry==${{ inputs.poetry-version }}
-        shell: bash
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          version: ${{ inputs.poetry-version }}
 
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
