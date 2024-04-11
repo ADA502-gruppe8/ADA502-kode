@@ -7,8 +7,10 @@ A brief description of what this project does and who it's for.
 For å kjøre prosjektet vil jeg anbefale følgende verktøy:
 
 - Beekeeper (database)
+https://www.beekeeperstudio.io/
 
 - Docker desktop
+https://www.docker.com/products/docker-desktop/
 
 - Mer?
 
@@ -18,7 +20,7 @@ To clone this repository, run the following command in your terminal:
 
 git clone LINK - SIMEN
 
-Dette laster ned hele prosjektet
+Dette laster ned hele prosjektet, og gjør deg klar! 
 
 ## Struktur
 
@@ -32,6 +34,7 @@ Det burde nå være en struktur som følger:
 Resten av filene
 
 Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så hopp over denne linjen.
+KAN VI SLETTE DEN MAPPEN SIMEN? - skipper initialization!
 
 Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 
