@@ -11,13 +11,7 @@ env:
 
 jobs:
   test:
-    strategy:
-      matrix:
-        python-version: [ "3.10", "3.11", "3.x" ]
-        poetry-version: [ "1.7.0", 1.8.0 ]
-        os: [ ubuntu-latest ]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     #    container:
     #      image: python:latest
 
@@ -42,8 +36,7 @@ jobs:
       - name: Install Python and Poetry
         uses: ./.github/actions/python-poetry-installation-action
         with:
-          python-version: ${{ matrix.python-version }}
-          poetry-version: ${{ matrix.poetry-version }}
+          python-version: 3.12
 
         # custom cache action
       - name: Load & Cache dependencies

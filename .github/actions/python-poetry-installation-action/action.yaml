@@ -4,7 +4,7 @@ inputs:
   python-version:
       description: 'The python version to install.'
       required: false
-      default: '3.x'
+      default: '3.12'
   poetry-version:
       description: 'The poetry version to install.'
       required: false
