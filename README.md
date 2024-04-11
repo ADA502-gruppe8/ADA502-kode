@@ -52,6 +52,10 @@ DATABASE_LOGIN = 'login'
 
 DATABASE_FIRERISK ='firerisk'
 
+SECRET_KEY ="jeppepåberget"
+
+Secret_key er ikke i bruk, så den er ikke viktig nå. Dette er for å slippe en feilmelding.
+
 ## Kjøring
 
 For å kjøre prosjektet, skriv følgende i terminal
