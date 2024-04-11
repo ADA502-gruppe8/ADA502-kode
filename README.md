@@ -24,12 +24,10 @@ Dette laster ned hele prosjektet, og gjør deg klar!
 
 ## Struktur
 
-Det burde nå være en struktur som følger:
+Det burde nå være en struktur som følger med mappene:
 
-- src
-
-
--tests
+-   src
+-   tests
 
 Resten av filene
 
@@ -44,10 +42,15 @@ Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 Du må fylle ut linje 2 og 3 med dine data.
 
 DATABASE_HOST = 'localhost'
+
 DATABASE_USERNAME = ''
+
 DATABASE_PASSWORD = ''
+
 DATABASE_PORT='5555'
+
 DATABASE_LOGIN = 'login'
+
 DATABASE_FIRERISK ='firerisk'
 
 ## Kjøring
@@ -59,7 +62,7 @@ docker compose build
 docker compose up
 
 Dette starter docker container, som inneholder 2 sub conteinere
-En for web app, og en for database
+- En for web app, og en for database
 
 ## Docker
 
@@ -69,12 +72,11 @@ Etter å kjørt dokcer compose build/up, burde man finne dette inne i docker des
 
 ## Beekeeper
 
-Du kan bruke uansett hvilket sql verktøy, men vi viser i beekeeper
+Du kan bruke uansett hvilket sql verktøy, men vi viser i beekeeper studio
 
 "New connection" i venstre hjørnet
 
 velg "Postgres" som connection type
-
 
 Deretter bruker du:
 
@@ -94,6 +96,7 @@ Du ser forskjellen i siste linje mellom login og firerisk i bildene under.
 ![alt text](image-1.png)
 
 ![alt text](image-2.png)
+
 
 ## Webapp
 
