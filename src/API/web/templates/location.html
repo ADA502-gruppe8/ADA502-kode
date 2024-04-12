@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+        #my-page-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #my-page-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter your location</h1>
+    <button id="get-gps">Get GPS Location</button>
+    <p id="gps-info"></p>
+    
+    <form id="location-form" action="/show-data" method="get">
+        <label for="location">Enter your location:</label><br>
+        <input type="text" id="location" name="location" required><br>
+        <input type="submit" value="Submit">
+    </form>
+    
+    <button id="my-page-btn" onclick="location.href='/my-page'">My Page</button>
+    
+    <script>
+        const getGpsButton = document.querySelector("#get-gps");
+        const gpsInfo = document.querySelector("#gps-info");
+        const locationForm = document.querySelector("#location-form");
+
+        getGpsButton.addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    gpsInfo.innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                    // Redirect to /show-data with GPS coordinates as query parameters
+                    window.location.href = `/show-data?location=${latitude},${longitude}`;
+                });
+            } else {
+                gpsInfo.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        });
+    </script>
+</body>
+</html>

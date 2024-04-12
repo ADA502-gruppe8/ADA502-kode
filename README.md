@@ -1,105 +1,127 @@
-# Installation
+# ADA502 - Cloud - firerisk
 
-The project is based on using the [Poetry package manager](https://python-poetry.org/).
+A brief description of what this project does and who it's for.
 
-Start by installing Poetry for your platform using the [installation instructions](https://python-poetry.org/docs/#installation)
+## Pre-requisites
 
-Create a new virtual Python environment for the project and activate the virtual environment.
+For å kjøre prosjektet vil jeg anbefale følgende verktøy:
 
-To install the required Python packages use:
+- Beekeeper (database)
+https://www.beekeeperstudio.io/
 
-```
-poetry install
-```
-# Overview
+- Docker desktop
+https://www.docker.com/products/docker-desktop/
 
-The implementation is organised into the following main folders:
+- Mer?
 
-- `datamodel` - contains an implementation of the data model used for weather data and fire risk indications
-- `weatherdata`  contains an client implementations and interfaces for fetching weather data from cloud services.
-- `fireriskmodel` contains an implementation of the underlying fire risk model
+## Cloning the Repository
 
-The main API for the implementation is in the file `frcapi.py`
+To clone this repository, run the following command in your terminal:
 
-# Weather Data Sources
+git clone LINK - SIMEN
 
-The implementation has been designed to be independent of any particular cloud-based weather data service. 
+Dette laster ned hele prosjektet, og gjør deg klar! 
 
-This library contains an implementation that use the weather data services provided by the Norwegian Meteorological Institute (MET)
+## Struktur
 
-Specifically, the files `src/frcm/weatherdata/client_met` and `src/frcm/weatherdata/extractor_met.py` shows how to implement client and extractors using
+Det burde nå være en struktur som følger med mappene:
 
-- MET Frost API for weather data observations: https://frost.met.no/index.html
-- MET Forecasting API for weather data forecasts: https://api.met.no/weatherapi/locationforecast/2.0/documentation 
+-   src
+-   tests
 
-To use these pre-implemented clients a file name `.env` must be put into the `src/frcm/weatherdata` folder having the following content:
+Resten av filene
 
-```
-MET_CLIENT_ID = '<INSERT CLIENT ID HERE>'
-MET_CLIENT_SECRET = '<INSERT CLIENT SECRET HERE>'
-```
+Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så hopp over denne linjen.
 
-Credentials for using the MET APIs can be obtained via: https://frost.met.no/auth/requestCredentials.html
+Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 
-Please make sure that you conform to the terms of service which includes restrictions on the number of API calls.
+## .env fil
 
-# Testing
+.env filen må opprettes, og innholde disse feltene
+Du må fylle ut linje 2 og 3 med dine data.
 
-The folder `tests` contains a number of unit tests that can be used to test the implementation. 
+DATABASE_HOST = 'localhost'
 
-To execute the tests enter the `tests` folder and execute
+DATABASE_USERNAME = ''
 
-```
-pytest
-```
+DATABASE_PASSWORD = ''
 
-You may also execute a specific test-file in the test-suite using, e.g., 
+DATABASE_PORT='5555'
 
-```
-pytest test_datamodel.py
-```
+DATABASE_LOGIN = 'login'
 
-or running a specific test within a test-file using, e.g., 
+DATABASE_FIRERISK ='firerisk'
 
-```
-pytest test_datamodel.py::TestDataModel::test_validate
-```
+SECRET_KEY ="jeppepåberget"
 
-# Application integration
+Secret_key er ikke i bruk, så den er ikke viktig nå. Dette er for å slippe en feilmelding.
 
-The file `src/main.py` provides sample code on how to compute fire risk indications and how to integration the implementation of fire risk indications into applications.
+## Kjøring
 
-Running the command
+For å kjøre prosjektet, skriv følgende i terminal
 
-```
-python3 main.py
-```
+docker compose build
 
-should result in similar output as below 
+docker compose up
 
-```
-...
+Dette starter docker container, som inneholder 2 sub conteinere
+- En for web app, og en for database
 
-FireRiskPrediction[latitude=60.383 longitude=5.3327]
-FireRisks[2024-01-13 00:00:00+00:00 6.072481167177002]
-FireRisks[2024-01-13 01:00:00+00:00 6.084901639685655]
-FireRisks[2024-01-13 02:00:00+00:00 6.115931368998181]
-FireRisks[2024-01-13 03:00:00+00:00 6.146731614820376]
-FireRisks[2024-01-13 04:00:00+00:00 6.157474811242355]
-FireRisks[2024-01-13 05:00:00+00:00 6.148031627082924]
-FireRisks[2024-01-13 06:00:00+00:00 6.135871365180064]
+Det vil dukke opp en folder "data", som vil være databasen, og lagd i prosjektet
 
-...
+## Docker
 
-FireRisks[2024-01-24 23:00:00+00:00 5.782145706635683]
-FireRisks[2024-01-25 00:00:00+00:00 5.789519566277565]
-FireRisks[2024-01-25 01:00:00+00:00 5.796865122491866]
-FireRisks[2024-01-25 02:00:00+00:00 5.80463250152655]
-FireRisks[2024-01-25 03:00:00+00:00 5.812626103446193]
-FireRisks[2024-01-25 04:00:00+00:00 5.820770098316547]
-FireRisks[2024-01-25 05:00:00+00:00 5.829024065716487]
-FireRisks[2024-01-25 06:00:00+00:00 5.837363568856687]
-```
+Etter å kjørt dokcer compose build/up, burde man finne dette inne i docker desktop
 
-showing hourly computed fire risks for the given location.
+![](image.png)
 
+## Beekeeper
+
+Du kan bruke uansett hvilket sql verktøy, men vi viser i beekeeper studio
+
+"New connection" i venstre hjørnet
+
+velg "Postgres" som connection type
+
+Deretter bruker du:
+
+Host = localhost
+port = 5555
+User = "navn fra .env fil"
+Password = "passord fra .env fil"
+Default Database = "login" eller "firerisk"
+
+Dette vil gi de 2 bildene under. 
+
+Anbefaler å gi de navn, og lagre forbindelsene til neste gang
+
+Du ser forskjellen i siste linje mellom login og firerisk i bildene under.
+
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+
+## Webapp
+
+Webappen kjører og du skal finne den på "[localhost:5000](http://localhost:5000/)"
+
+Når du kjører appen så kommer den med "Uvicorn running on http://0.0.0.0:5000" , men du må bruke (http://localhost:5000/)
+
+Der vil du komme til ulike interface
+
+Den vil kunne kjøre mellom de ulik nettsidene.
+
+For å logge inn må feltet være != 0 i logginn
+
+Ved opprettelse vil det komme i databasen, og lage en bruker & gå videre til neste
+
+Location vil kunne gi deg mulighet til å skrive inn en lokasjon, eller bruke gps.
+Begge disse vil gi deg resultatsiden, som ikke viser noe data enda.
+
+Dette fordi vi ikke har gjort ferdig denne delen av logikken.
+
+Du kan alltid slette brukeren, men slettes ikke nå i databasen. 
+
+Håper alt fungerte! 

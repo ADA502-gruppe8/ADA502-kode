@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            margin-bottom: 20px; /* Added margin for spacing between buttons */
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #d32f2f;
+        }
+        #back-button {
+            background-color: #008CBA; /* Different color for the back button */
+        }
+        #back-button:hover {
+            background-color: #007B8A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- "Back to Location Search" button -->
+        <button id="back-button" onclick="window.location.href='/location';">Back to Location Search</button>
+
+        <h1>Welcome, {{ name }}!</h1>
+        <p>Here you can see all the data you have uploaded to the system:</p>
+        
+        <div id="user-info">
+            <p><strong>Name:</strong> <span id="user-name">[user's name from database]</span></p>
+        </div>
+
+        <button id="delete-user-btn" onclick="deleteUser()">Delete User</button>
+    </div>
+
+    <script>
+        function deleteUser() {
+            // Implementation depends on how you handle user deletion (e.g., API call)
+            alert("Delete user function not implemented yet.");
+        }
+    </script>
+
+</body>
+</html>
