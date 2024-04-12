@@ -34,23 +34,20 @@ Resten av filene
 
 Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så hopp over denne linjen.
 
-Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
+
 
 ## .env fil
 
+Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 .env filen må opprettes, og innholde disse feltene
+
 Du må fylle ut linje 2 og 3 med dine data.
 
 DATABASE_HOST = 'localhost'
-
 DATABASE_USERNAME = ''
-
 DATABASE_PASSWORD = ''
-
 DATABASE_PORT='5555'
-
 DATABASE_LOGIN = 'login'
-
 DATABASE_FIRERISK ='firerisk'
 
 SECRET_KEY ="jeppepåberget"
