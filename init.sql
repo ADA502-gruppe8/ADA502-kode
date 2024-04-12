@@ -61,3 +61,4 @@ INSERT INTO roles (name) VALUES ('admin'), ('user') ON CONFLICT (name) DO NOTHIN
 
 INSERT INTO users (username, password_hash, role_id)
 VALUES ('admin', 'admin', (SELECT id FROM roles WHERE name = 'admin'));
+
