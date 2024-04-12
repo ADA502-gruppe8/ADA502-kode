@@ -18,7 +18,7 @@ https://www.docker.com/products/docker-desktop/
 
 To clone this repository, run the following command in your terminal:
 
-git clone LINK - SIMEN
+git clone https://github.com/ADA502-gruppe8/ADA502-kode.git
 
 Dette laster ned hele prosjektet, og gjør deg klar! 
 
