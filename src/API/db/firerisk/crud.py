@@ -1,4 +1,5 @@
 import psycopg2
+from API.db.conDeconDb import Database
 
 def print_data(db, table):
     try:
@@ -9,17 +10,23 @@ def print_data(db, table):
     except Exception as e:
         print(f'Data not printed. Error: {e}')
 
-def insert_location(db, latitude, longitude):
+def insert_location_and_get_id(latitude, longitude):
+    db = Database("firerisk")
+    location_id = None
     try:
         db.cursor.execute(
-            ("INSERT INTO locations (latitude, longitude) VALUES (%s, %s)"),
+            "INSERT INTO locations (latitude, longitude) VALUES (%s, %s) RETURNING id",
             (latitude, longitude)
         )
-        db.mydb.commit()
-        print("Location inserted successfully")
-    
+        location_id = db.cursor.fetchone()[0]  # Fetch the ID of the inserted location
+        db.conn.commit()
+        print("Location inserted successfully, ID:", location_id)
     except psycopg2.Error as e:
         print(f'Error inserting location: {e}')
+    finally:
+        db.close()
+   
+    return location_id
 
 # Insert into the weather_observations table
 def insert_weather_observation(db, location_id, timestamp, temperature, humidity, wind_speed):
@@ -48,17 +55,21 @@ def insert_weather_forecast(db, location_id, timestamp, temperature, humidity, w
         print(f'Error inserting weather forecast: {e}')
 
 # Insert into the fire_risk_predictions table
-def insert_fire_risk_prediction(db, location_id, timestamp, fire_risk_score):
+def insert_fire_risk_prediction(location_id, timestamp, fire_risk_score):
+    db = Database("firerisk")
+    if location_id is None:
+        print("No location ID provided for fire risk prediction.")
     try:
         db.cursor.execute(
-            ("INSERT INTO fire_risk_predictions (location_id, timestamp, fire_risk_score) VALUES (%s, %s, %s)"),
+            "INSERT INTO fire_risk_predictions (location_id, timestamp, fire_risk_score) VALUES (%s, %s, %s)",
             (location_id, timestamp, fire_risk_score)
         )
-        db.mydb.commit()
+        db.conn.commit()
         print("Fire risk prediction inserted successfully")
-    
     except psycopg2.Error as e:
         print(f'Error inserting fire risk prediction: {e}')
+    finally:
+        db.close()
 
 def delete_data(db, Lokasjon):
     try:
