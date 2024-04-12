@@ -14,3 +14,13 @@ class WeatherDataClient:
     @abc.abstractmethod
     def fetch_forecast(self, location: Location) -> Forecast:
         pass
+
+    @abc.abstractmethod
+    def fetch_observations_tp(self, location: Location, start: datetime.datetime,
+                              end: datetime.datetime) -> Observations:
+        pass
+
+    @abc.abstractmethod
+    def fetch_forecast_td(self, location: Location, timedelta: datetime.timedelta) -> Forecast:
+        pass
+
