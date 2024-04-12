@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Weather Observations from 7 days ago</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Location ID</th>
+        <th>Timestamp</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+        <th>Wind Speed</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for observation in weather_observations %}
+        <tr>
+            <td>{{ observation.location_id }}</td>
+            <td>{{ observation.timestamp }}</td>
+            <td>{{ observation.temperature }}</td>
+            <td>{{ observation.humidity }}</td>
+            <td>{{ observation.wind_speed }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h2>Weather Forecasts the next 7 days</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Location ID</th>
+        <th>Timestamp</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+        <th>Wind Speed</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for forecast in weather_forecasts %}
+        <tr>
+            <td>{{ forecast.location_id }}</td>
+            <td>{{ forecast.timestamp }}</td>
+            <td>{{ forecast.temperature }}</td>
+            <td>{{ forecast.humidity }}</td>
+            <td>{{ forecast.wind_speed }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h2>Fire Risk Predictions from 7 days ago and next 7 days</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Location ID</th>
+        <th>Timestamp</th>
+        <th>Fire Risk Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for prediction in fire_risk_predictions %}
+        <tr>
+            <td>{{ prediction.location_id }}</td>
+            <td>{{ prediction.timestamp }}</td>
+            <td>{{ prediction.fire_risk_score }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

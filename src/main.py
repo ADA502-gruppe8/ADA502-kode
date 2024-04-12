@@ -1,6 +1,6 @@
 import datetime
 import uvicorn
-from fastapi import FastAPI
+from API.web.web import app  # Importerer FastAPI-appen fra web/web.py
 from frcm.frcapi import FireRiskAPI
 from frcm.weatherdata.client_met import METClient
 from frcm.weatherdata.extractor_met import METExtractor
@@ -9,9 +9,10 @@ from frcm.datamodel.model import Location
 # Create FASTAPI application
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+    uvicorn.run(app, host="localhost", port=5000)
+
+    met_extractor = METExtractor()
+
 
 # Application logic
 met_extractor = METExtractor()
