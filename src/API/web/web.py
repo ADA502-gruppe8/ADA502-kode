@@ -1,18 +1,27 @@
-from fastapi import FastAPI, Request, Form, HTTPException
+from fastapi import FastAPI, Request, Form, HTTPException, Depends
+from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from API.db.conDeconDb import Database
+from src.API.db.auth import auth  # Adjust the path as necessary
+from src.API.db.conDeconDb import Database
 from passlib.context import CryptContext
 
 app = FastAPI()
 templates = Jinja2Templates(directory="API/web/templates")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # Define token URL if needed for interactive API docs
 
-# Create a password context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Function to hash a password
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
+
+# Function to validate JWT in each request
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = auth.validate_token(token)
+        return payload  # Or further extract user details as needed
+    except auth.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 @app.get("/", response_class=HTMLResponse)
 def get_login_page(request: Request, msg: str = None):
@@ -35,8 +44,6 @@ async def make_user(username: str = Form(...), password: str = Form(...)):
         print(f"An error occurred: {e}")
     finally:
         db.close()
-    
-    # Assuming you have a template named 'location.html' in your 'templates' directory
     return RedirectResponse(url="/location", status_code=303)
 
 @app.post("/login")
@@ -47,9 +54,10 @@ async def form_login(request: Request, username: str = Form(...), password: str 
         # If either field is empty, redirect back to the login page with a message
         return templates.TemplateResponse("login.html", {"request": request, "msg": "Fuck u mate"})
 
+# Protected route example using the dependency
 @app.get("/location", response_class=HTMLResponse)
-def get_location_page(request: Request):
-    return templates.TemplateResponse("location.html", {"request": request})
+def get_location_page(request: Request, user: dict = Depends(get_current_user)):
+    return templates.TemplateResponse("location.html", {"request": request, "user": user})
 
 @app.post("/location")
 def process_location(request: Request, location: str = Form(...)):

@@ -7,6 +7,7 @@ from API.db.conDeconDb import open_connection, close_db_connection
 from .models import User
 from .schemas import UserCreate
 import psycopg2
+from fastapi import HTTPException
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
@@ -14,30 +15,22 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def create_user(user: UserCreate):
-    # Hash the user's password
+def create_user(user: UserCreate, connection):
     hashed_password = pwd_context.hash(user.password)
-    
-    # SQL statement for inserting a new user
-    sql = """
-    INSERT INTO users (username, password_hash, role) VALUES (%s, %s, %s)
-    """
-    
-    # Open a database connection
-    conn = open_connection("login")
-    if conn is not None:
-        try:
-            # Create a new cursor
-            cur = conn.cursor()
-            # Execute the insert statement
-            cur.execute(sql, (user.email, hashed_password, 2))
-            # Commit the transaction
-            conn.commit()
-            # Close the cursor
-            cur.close()
-        finally:
-            # Close the database connection
-            close_db_connection(conn)
+    sql = "INSERT INTO users (username, password, role) VALUES (%s, %s, %s)"
+    try:
+        cur = connection.cursor()
+        cur.execute(sql, (user.email, hashed_password, user.role))  # Assuming 'role' is part of UserCreate
+        connection.commit()
+        cur.close()
+        user_data = {"username": user.email, "permissions": "example_permission"}
+        token = auth.create_access_token(user_data)
+        return token
+    except Exception as e:
+        connection.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        close_db_connection(connection)
 
 def delete_user(user_email: str):
     # SQL statement for deleting a user

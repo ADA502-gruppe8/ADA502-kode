@@ -24,11 +24,12 @@ def create_access_token(data: dict) -> str:
     return encoded_jwt
 
 
-def authenticate_user(username: str, password: str) -> User:
-    user = get_user_by_username(username)
-    if not user or not verify_password(password, user.hashed_password):
+def authenticate_user(username: str, password: str, connection) -> Optional[str]:
+    user = get_user_by_username(connection, username)
+    if not user or not verify_password(password, user[1]):
         return None
-    return user
+    user_data = {"username": user[0], "permissions": "example_permission"}  # Customize as needed
+    return create_access_token(user_data)
 
 # Adjust the get user by username function for psycopg2 and PostgreSQL syntax
 def get_user_by_username(connection: psycopg2.extensions.connection, username: str) -> Optional[Tuple[str, str]]:
