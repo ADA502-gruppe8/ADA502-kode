@@ -16,7 +16,7 @@ def insert_location(latitude, longitude):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            ("INSERT INTO locations (latitude, longitude) VALUES (%s, %s)"),
+            ("INSERT INTO locations (latitude, longitude) VALUES (%s, %s) ON CONFLICT DO NOTHING"),
             (latitude, longitude)
         )
         conn.commit()
@@ -27,9 +27,11 @@ def insert_location(latitude, longitude):
 
 # Insert into the weather_observations table
 def insert_weather_observation(db, location_id, timestamp, temperature, humidity, wind_speed):
+    conn = psycopg2.connect("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")    
+    cursor = conn.cursor()
     try:
         cursor.execute(
-            ("INSERT INTO weather_observations (location_id, timestamp, temperature, humidity, wind_speed) VALUES (%s, %s, %s, %s, %s)"),
+            ("INSERT INTO weather_observations (location_id, timestamp, temperature, humidity, wind_speed) VALUES (%s, %s, %s, %s, %s ON CONFLICT DO NOTHING)"),
             (location_id, timestamp, temperature, humidity, wind_speed)
         )
         conn.commit()
@@ -57,14 +59,19 @@ def insert_fire_risk_prediction(location_id, timestamp, fire_risk_score):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            ("INSERT INTO fire_risk_predictions (location_id, timestamp, fire_risk_score) VALUES (%s, %s, %s)"),
+            ("INSERT INTO fire_risk_predictions (location_id, timestamp, fire_risk_score) VALUES (%s, %s, %s) ON CONFLICT (location_id, timestamp) DO NOTHING"),
             (location_id, timestamp, fire_risk_score)
         )
         conn.commit()
         print("Fire risk prediction inserted successfully")
+        
     
     except psycopg2.Error as e:
         print(f'Error inserting fire risk prediction: {e}')
+
+    finally:
+        cursor.close()
+        conn.close()
 
 def delete_data(db, Lokasjon):
     try:

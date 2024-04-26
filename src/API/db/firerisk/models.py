@@ -34,7 +34,7 @@ class WeatherForecast(Base):
 
 class FireRiskPrediction(Base):
     __tablename__ = 'fire_risk_predictions'
-    id = Column(Integer, primary_key=True)
+    #id = Column(Integer, primary_key=True)
     location_id = Column(Integer, ForeignKey('locations.id'))
     timestamp = Column(TIMESTAMP(timezone=True), nullable=False)
     fire_risk_score = Column(Numeric)

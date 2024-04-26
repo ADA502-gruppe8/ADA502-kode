@@ -36,10 +36,11 @@ CREATE TABLE IF NOT EXISTS weather_forecasts (
 
 -- Create Fire Risk Predictions Table
 CREATE TABLE IF NOT EXISTS fire_risk_predictions (
-    id SERIAL PRIMARY KEY,
+    /*id SERIAL PRIMARY KEY,*/
     location_id INTEGER REFERENCES locations(id),
     timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-    fire_risk_score NUMERIC
+    fire_risk_score NUMERIC,
+    PRIMARY KEY (location_id, timestamp)
 );
 
 \c login
