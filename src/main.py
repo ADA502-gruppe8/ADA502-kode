@@ -1,6 +1,6 @@
 import datetime
 import uvicorn
-from API.db.firerisk.crud import insert_fire_risk_prediction, insert_location
+from API.db.firerisk.crud import insert_fire_risk_prediction, insert_location, print_data
 from API.web.web import app
 from frcm.frcapi import FireRiskAPI
 from frcm.weatherdata.client_met import METClient
@@ -25,23 +25,24 @@ obs_delta = datetime.timedelta(days=2)
 
 predictions = frc.compute_now(location, obs_delta)
 
-mydb = db.Database("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")
+#mydb = db.Database("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")
 
-try:
-    insert_location(mydb.conn, location.latitude, location.longitude)
+""" try:
+    insert_location(location.latitude, location.longitude)
     print("Location inserted successfully")
 except Exception as e:
     print(f"Location error {e}")
 print(predictions)
+ """
 
-#print(predictions)
-
-""" for pred in predictions:
+""" for prediction in predictions:
     try:    
-        insert_fire_risk_prediction(1, pred.timestamp, pred.firerisks)
+        insert_fire_risk_prediction(location.longitude, prediction, prediction)
         print("Fire risk inserted successfully")
-    except:
-        print("Fire risk error") """
+    except Exception as e:
+        print(f'Error inserting fire risk: {e}') """
+
+print(predictions)
 
 # Configure and run Uvicorn server properly
 if __name__ == "__main__":

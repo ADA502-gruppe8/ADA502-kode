@@ -1,21 +1,25 @@
 import psycopg2
 
-def print_data(db, table):
+def print_data(table):
+    conn = psycopg2.connect("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")    
+    cursor = conn.cursor()
     try:
-        db.cursor.execute(f'SELECT * FROM {table}')
-        for row in db.cursor.fetchall():
+        cursor.execute(f'SELECT * FROM {table}')
+        for row in cursor.fetchall():
             print(row)
 
     except Exception as e:
         print(f'Data not printed. Error: {e}')
 
-def insert_location(db, latitude, longitude):
+def insert_location(latitude, longitude):
+    conn = psycopg2.connect("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")    
+    cursor = conn.cursor()
     try:
-        db.cursor.execute(
+        cursor.execute(
             ("INSERT INTO locations (latitude, longitude) VALUES (%s, %s)"),
             (latitude, longitude)
         )
-        db.mydb.commit()
+        conn.commit()
         print("Location inserted successfully")
     
     except psycopg2.Error as e:
@@ -24,11 +28,11 @@ def insert_location(db, latitude, longitude):
 # Insert into the weather_observations table
 def insert_weather_observation(db, location_id, timestamp, temperature, humidity, wind_speed):
     try:
-        db.cursor.execute(
+        cursor.execute(
             ("INSERT INTO weather_observations (location_id, timestamp, temperature, humidity, wind_speed) VALUES (%s, %s, %s, %s, %s)"),
             (location_id, timestamp, temperature, humidity, wind_speed)
         )
-        db.mydb.commit()
+        conn.commit()
         print("Weather observation inserted successfully")
     
     except psycopg2.Error as e:
@@ -48,13 +52,15 @@ def insert_weather_forecast(db, location_id, timestamp, temperature, humidity, w
         print(f'Error inserting weather forecast: {e}')
 
 # Insert into the fire_risk_predictions table
-def insert_fire_risk_prediction(db, location_id, timestamp, fire_risk_score):
+def insert_fire_risk_prediction(location_id, timestamp, fire_risk_score):
+    conn = psycopg2.connect("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")    
+    cursor = conn.cursor()
     try:
-        db.cursor.execute(
+        cursor.execute(
             ("INSERT INTO fire_risk_predictions (location_id, timestamp, fire_risk_score) VALUES (%s, %s, %s)"),
             (location_id, timestamp, fire_risk_score)
         )
-        db.mydb.commit()
+        conn.commit()
         print("Fire risk prediction inserted successfully")
     
     except psycopg2.Error as e:
