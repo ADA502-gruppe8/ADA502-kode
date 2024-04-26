@@ -27,22 +27,22 @@ predictions = frc.compute_now(location, obs_delta)
 
 #mydb = db.Database("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")
 
-try:
-    insert_location(location.latitude, location.longitude)
-    print("Location inserted successfully")
-except Exception as e:
-    print(f"Location error {e}")
+# try:
+#     insert_location(location.latitude, location.longitude)
+#     print("Location inserted successfully")
+# except Exception as e:
+#     print(f"Location error {e}")
 
-firerisks = predictions.firerisks
+# firerisks = predictions.firerisks
 
-for firerisk in firerisks:
-    try:    
-        insert_fire_risk_prediction(1, firerisk.timestamp, firerisk.ttf)
-        print("Fire risk inserted successfully")
-    except Exception as e:
-        print(f'Error inserting fire risk: {e}')
+# for firerisk in firerisks:
+#     try:    
+#         insert_fire_risk_prediction(1, firerisk.timestamp, firerisk.ttf)
+#         print("Fire risk inserted successfully")
+#     except Exception as e:
+#         print(f'Error inserting fire risk: {e}')
 
-print(predictions)
+# print(predictions)
 
 # Configure and run Uvicorn server properly
 if __name__ == "__main__":
