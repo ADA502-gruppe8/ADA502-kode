@@ -1,29 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FAF9F6; /* A softer shade for easier reading */
+            color: #333333; /* Slightly darker text for better readability */
+        }
+    
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        h1, .form-header {
+            font-family: 'Bungee', cursive; /* A fun font for the header */
+            font-weight: 700; /* Bolder for more impact */
+            font-size: 36px; /* Slightly larger */
+            margin-bottom: 20px;
+            color: #2C3E50; /* A deep shade of blue for elegance */
+            text-shadow: 4px 4px 5px rgb(125, 55, 55, 0.5); /* This adds a shadow to the text */
+        }
+
+        .form-header {
+            margin-top: 40px; /* Spacing between the forms */
+        }
+    
+        input, button {
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: 2px solid #81A4CD; /* Softer border color */
+            border-radius: 5px;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            background-color: #ffffff;
+            color: #2C3E50;
+        }
+    
+        input:focus {
+            border-color: #E07A5F; /* Highlight focus with theme color */
+            background-color: #FEFAF1; /* Very light background on focus */
+        }
+    
+        button {
+            background-color: #E07A5F; /* Maintaining the terracotta */
+            color: white;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16); /* More pronounced shadow for depth */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+    
+        button:hover {
+            background-color: #F3A683; /* Lighter terracotta for hover */
+        }
+    </style>
 </head>
 <body>
-    <h1> LOGIN </h1>
-    <form action="/login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-
-
-    <h2> Register </h2>
-
-    <form action="/make-user" method="post">
-        <label for="new_username">Username:</label><br>
-        <input type="text" id="new_username" name="username" required><br>
-        <label for="new_password">Password:</label><br>
-        <input type="password" id="new_password" name="password" required><br>
-        <input type="submit" value="Create User">
-    </form>
-
-
+    <div class="container vh-100 d-flex align-items-center justify-content-center">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center"> <!-- Added text-center for center alignment -->
+                <h1>Login</h1>
+                <form action="/login" method="post">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <h2 class="form-header">Register</h2>
+                <form action="/make-user" method="post">
+                    <input type="text" id="new_username" name="username" placeholder="Username" required>
+                    <input type="password" id="new_password" name="password" placeholder="Password" required>
+                    <button type="submit">Create User</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
