@@ -86,11 +86,11 @@ velg "Postgres" som connection type
 
 Deretter bruker du:
 
-Host = localhost
-port = 5555
-User = "navn fra .env fil"
-Password = "passord fra .env fil"
-Default Database = "login" eller "firerisk"
+Host = localhost <br />
+port = 5555 <br />
+User = "navn fra .env fil" <br />
+Password = "passord fra .env fil" <br />
+Default Database = "login" eller "firerisk" <br />
 
 Dette vil gi de 2 bildene under. 
 
