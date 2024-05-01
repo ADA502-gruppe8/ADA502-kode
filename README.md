@@ -43,12 +43,12 @@ Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 
 Du må fylle ut linje 2 og 3 med dine data.
 
-DATABASE_HOST = 'localhost'
-DATABASE_USERNAME = ''
-DATABASE_PASSWORD = ''
-DATABASE_PORT='5555'
-DATABASE_LOGIN = 'login'
-DATABASE_FIRERISK ='firerisk'
+DATABASE_HOST = 'localhost'__
+DATABASE_USERNAME = ''__
+DATABASE_PASSWORD = ''__
+DATABASE_PORT='5555'__
+DATABASE_LOGIN = 'login'__
+DATABASE_FIRERISK ='firerisk'__
 
 SECRET_KEY ="jeppepåberget"
 
