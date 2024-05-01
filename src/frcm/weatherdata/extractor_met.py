@@ -29,19 +29,22 @@ class METExtractor(Extractor):
                 temperature = np.nan
                 relative_humidity = np.nan
                 wind_speed = np.nan
+                timestamp = reference_time  # assume that observations have the same time stamp
 
                 for station_observation in station_observations:
 
                     # string to datatime object required
-                    timestamp = reference_time # assume that observations have the same time stamp
 
                     # TODO: rewrite to use a switch
-                    if station_observation['elementId'] == 'air_temperature':
-                        temperature = station_observation['value']
-                    elif station_observation['elementId'] == 'relative_humidity':
-                        relative_humidity = station_observation['value']
-                    elif station_observation['elementId'] == 'wind_speed':
-                        wind_speed = station_observation['value']
+                    match station_observation['elementId']:
+                        case 'air_temperature':
+                            temperature = station_observation['value']
+                        case 'relative_humidity':
+                            relative_humidity = station_observation['value']
+                        case 'wind_speed':
+                            wind_speed = station_observation['value']
+                        case _:
+                            pass
 
                 wd_point = WeatherDataPoint(temperature=temperature,
                                             humidity=relative_humidity,
@@ -52,7 +55,7 @@ class METExtractor(Extractor):
                 weatherdatapoints.append(wd_point)
 
         # TODO: maybe also source as part of the parameters - or extract weather data function instead
-        observations = Observations(source=source_id, location=location,data=weatherdatapoints)
+        observations = Observations(source=source_id, location=location, data=weatherdatapoints)
 
         return observations
 
@@ -72,7 +75,6 @@ class METExtractor(Extractor):
         weatherdatapoints = list()
 
         for forecast in timeseries:
-
             timestamp = dateutil.parser.parse(forecast['time'])
 
             details = forecast['data']['instant']['details']
@@ -88,7 +90,7 @@ class METExtractor(Extractor):
 
             weatherdatapoints.append(wd_point)
 
-        forecast = Forecast(location=location,data=weatherdatapoints)
+        forecast = Forecast(location=location, data=weatherdatapoints)
 
         return forecast
 
@@ -98,7 +100,7 @@ class METExtractor(Extractor):
 
         forecast = self.extract_forecast(met_response)
 
-        now = datetime.datetime.now()  # FIXME: date from each response should be used
+        now = datetime.datetime.now()
 
         weather_data = WeatherData(created=now,
                                    observations=observations,

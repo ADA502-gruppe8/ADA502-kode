@@ -11,8 +11,11 @@ from frcm.datamodel.model import Location
 # app = FastAPI()
 
 # Application logic setup
-met_extractor = METExtractor()
-met_client = METClient(extractor=met_extractor)
+# met_extractor = METExtractor()
+# met_client = METClient(extractor=met_extractor)
+
+met_client = METClient()
+
 frc = FireRiskAPI(client=met_client)
 
 location = Location(latitude=60.383, longitude=5.3327)  # Bergen
@@ -22,11 +25,11 @@ location = Location(latitude=60.383, longitude=5.3327)  # Bergen
 # location = Location(latitude=69.6492, longitude=18.9553) # Tromsø
 
 # how far into the past to fetch observations
-# obs_delta = datetime.timedelta(days=2)
+obs_delta = datetime.timedelta(days=2)
 
-# predictions = frc.compute_now(location, obs_delta)
+predictions = frc.compute_now(location, obs_delta)
 
-# print(predictions)
+print(predictions)
 
 # Configure and run Uvicorn server properly
 if __name__ == "__main__":

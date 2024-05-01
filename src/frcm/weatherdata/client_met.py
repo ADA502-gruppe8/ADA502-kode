@@ -8,11 +8,12 @@ from decouple import config
 from frcm.weatherdata.client import WeatherDataClient
 from frcm.weatherdata.extractor import Extractor
 from frcm.datamodel.model import Location, Observations, Forecast
+from frcm.weatherdata.extractor_met import METExtractor
 
 
 class METClient(WeatherDataClient):
 
-    def __init__(self, extractor: Extractor):
+    def __init__(self, extractor: Extractor = None):
 
         self.forecast_endpoint = 'https://api.met.no/weatherapi/locationforecast/2.0/compact.json'
 
@@ -22,7 +23,10 @@ class METClient(WeatherDataClient):
         self.MET_CLIENT_ID = config('MET_CLIENT_ID')
         self.MET_CLIENT_SECRET = config('MET_CLIENT_SECRET')
 
-        self.extractor = extractor
+        if extractor is None:
+            self.extractor = METExtractor()
+        else:
+            self.extractor = extractor
 
     def send_met_request(self, parameters):
 
@@ -65,7 +69,7 @@ class METClient(WeatherDataClient):
         parameters = {
             'types': 'SensorSystem',
             'elements': 'air_temperature,relative_humidity,wind_speed',
-            'geometry':  f'nearest(POINT({location.longitude} {location.latitude}))'}
+            'geometry': f'nearest(POINT({location.longitude} {location.latitude}))'}
 
         response = self.send_frost_request(self.sources_endpoint, parameters)
 
@@ -73,15 +77,20 @@ class METClient(WeatherDataClient):
 
     def get_nearest_station_id(self, location: Location) -> str:
 
-        # TODO: more error handling here
+        station_id = "-1"
 
-        frost_response = self.get_nearest_station_raw(location)
+        try:
+            frost_response = self.get_nearest_station_raw(location)
 
-        frost_response_str = frost_response.text
+            frost_response_str = frost_response.text
 
-        station_response = json.loads(frost_response_str)
+            station_response = json.loads(frost_response_str)
 
-        station_id = station_response['data'][0]['id']
+            station_id = station_response['data'][0]['id']
+
+        except Exception as e:
+            print(e)
+            print(f'Error getting station id for location {location}')
 
         return station_id
 
@@ -118,15 +127,9 @@ class METClient(WeatherDataClient):
 
     def fetch_observations(self, location: Location, start: datetime.datetime, end: datetime.datetime) -> Observations:
 
-#        print(location)
-
         station_id = self.get_nearest_station_id(location)
 
-#        print(station_id)
-
         response = self.fetch_observations_raw(station_id, start, end)
-
-#        print(response.text)
 
         observations = self.extractor.extract_observations(response.text, location)
 

@@ -1,11 +1,11 @@
 import abc
 
-from frcm.datamodel.model import Observations, Forecast
+from frcm.datamodel.model import Observations, Forecast, Location
 
 
 class Extractor:
     @abc.abstractmethod
-    def extract_observations(self, data: str) -> Observations:
+    def extract_observations(self, data: str, location: Location) -> Observations:
         pass
 
     @abc.abstractmethod
