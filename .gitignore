@@ -147,6 +147,7 @@ dmypy.json
 
 #ignore datafolder
 data/
+data
 
 # Pyre type checker
 .pyre/
