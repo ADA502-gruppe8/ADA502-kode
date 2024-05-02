@@ -12,13 +12,14 @@ https://www.beekeeperstudio.io/
 - Docker desktop
 https://www.docker.com/products/docker-desktop/
 
-- Mer?
+- VSCode (Eller annen IDE)
+https://code.visualstudio.com/
 
 ## Cloning the Repository
 
 To clone this repository, run the following command in your terminal:
 
-git clone LINK - SIMEN
+git clone https://github.com/ADA502-gruppe8/ADA502-kode.git
 
 Dette laster ned hele prosjektet, og gjør deg klar! 
 
@@ -33,28 +34,28 @@ Resten av filene
 
 Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så hopp over denne linjen.
 
-Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
+
 
 ## .env fil
 
+Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 .env filen må opprettes, og innholde disse feltene
+
 Du må fylle ut linje 2 og 3 med dine data.
 
-DATABASE_HOST = 'localhost'
-
-DATABASE_USERNAME = ''
-
-DATABASE_PASSWORD = ''
-
-DATABASE_PORT='5555'
-
-DATABASE_LOGIN = 'login'
-
-DATABASE_FIRERISK ='firerisk'
+DATABASE_HOST = 'localhost' <br />
+DATABASE_USERNAME = '' <br />
+DATABASE_PASSWORD = '' <br />
+DATABASE_PORT='5555' <br />
+DATABASE_LOGIN = 'login' <br />
+DATABASE_FIRERISK ='firerisk' <br />
 
 SECRET_KEY ="jeppepåberget"
 
 Secret_key er ikke i bruk, så den er ikke viktig nå. Dette er for å slippe en feilmelding.
+
+.env filen skal ligge yterst i mappen slik:
+![image](https://github.com/ADA502-gruppe8/ADA502-kode/assets/122608579/aed8c33f-ccd1-4d1d-b9aa-2561a99d0dba)
 
 ## Kjøring
 
@@ -85,11 +86,11 @@ velg "Postgres" som connection type
 
 Deretter bruker du:
 
-Host = localhost
-port = 5555
-User = "navn fra .env fil"
-Password = "passord fra .env fil"
-Default Database = "login" eller "firerisk"
+Host = localhost <br />
+port = 5555 <br />
+User = "navn fra .env fil" <br />
+Password = "passord fra .env fil" <br />
+Default Database = "login" eller "firerisk" <br />
 
 Dette vil gi de 2 bildene under. 
 
