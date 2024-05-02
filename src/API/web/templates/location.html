@@ -1,61 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Location Input</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            position: relative;
+            font-family: 'Roboto', sans-serif;
+            background-color: #FAF9F6;
+            color: #333333;
         }
-        #my-page-btn {
+
+        .container {
+                    position: relative;
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+        .top-left {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            background-color: #007bff;
+            top: 10px;
+            left: 10px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;  /* Aligns content towards the start of the flex container */
+            margin-top: -500px;  /* Pulls the form up by 50px; adjust as necessary */
+            width: 100%;  /* Assuming you want to maintain full width */
+        }
+
+        select, input[type="submit"] {
+            width: 300px;  /* Adjust width as necessary */
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: 2px solid #81A4CD;
+            border-radius: 5px;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            background-color: #ffffff;
+            color: #2C3E50;
+        }
+
+        select:focus, input[type="submit"]:focus {
+            border-color: #E07A5F;
+            background-color: #FEFAF1;
+        }
+
+        input[type="submit"] {
+            background-color: #E07A5F;
+            color: white;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #F3A683;
+        }
+
+        #my-page-btn {
+            position: fixed; /* Fixed positioning to keep it at the same place even on scroll */
+            top: 20px; /* 20px from the top of the viewport */
+            right: 20px; /* 20px from the right of the viewport */
+            padding: 10px 20px; /* Adjust padding to your preference */
+            background-color: #E07A5F; /* Styling to match your submit button */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         #my-page-btn:hover {
-            background-color: #0056b3;
+            background-color: #F3A683; /* Lighter shade for hover, similar to your submit button */
         }
     </style>
 </head>
 <body>
-    <h1>Enter your location</h1>
-    <button id="get-gps">Get GPS Location</button>
-    <p id="gps-info"></p>
+    <div class="container">
+        <!-- Top-right corner elements -->
+        <div class="top-left">
+            <h1>Choose Location</h1>
+            <button id="get-gps">Get GPS Location</button>
+            <p id="gps-info"></p>
+            <button id="my-page-btn" onclick="location.href='/my-page'">My Page</button>
+        </div>
     
-    <form id="location-form" action="/show-data" method="get">
-        <label for="location">Enter your location:</label><br>
-        <input type="text" id="location" name="location" required><br>
-        <input type="submit" value="Submit">
-    </form>
-    
-    <button id="my-page-btn" onclick="location.href='/my-page'">My Page</button>
-    
+        <!-- Centered elements -->
+        <div class="form-container">
+            <form id="location-form" action="/show-data" method="get">
+                <select id="location" name="location" required>
+                    <option value="">--Select a location--</option>
+                    <option value="location1">Location 1</option>
+                    <option value="location2">Location 2</option>
+                    <option value="location3">Location 3</option>
+                </select><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
     <script>
         const getGpsButton = document.querySelector("#get-gps");
         const gpsInfo = document.querySelector("#gps-info");
-        const locationForm = document.querySelector("#location-form");
-
+    
         getGpsButton.addEventListener("click", () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    gpsInfo.innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
-                    // Redirect to /show-data with GPS coordinates as query parameters
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                gpsInfo.innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+                // Check if a "Show Data" button already exists
+                let redirectButton = document.querySelector("#show-data-btn");
+                if (!redirectButton) {
+                    // Create a new button element
+                    redirectButton = document.createElement("button");
+                    redirectButton.id = "show-data-btn";
+                    redirectButton.textContent = "Show Data";
+                    // Append the new button to the DOM next to the "Get GPS Location" button
+                    getGpsButton.parentNode.insertBefore(redirectButton, getGpsButton.nextSibling);
+                }
+
+                // Update the click event listener with the new location
+                redirectButton.addEventListener("click", () => {
                     window.location.href = `/show-data?location=${latitude},${longitude}`;
                 });
-            } else {
-                gpsInfo.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        });
+            });
+        } else {
+            gpsInfo.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    });
     </script>
 </body>
 </html>
