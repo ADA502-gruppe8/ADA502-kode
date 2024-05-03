@@ -22,9 +22,8 @@ location = Location(latitude=60.383, longitude=5.3327)  # Bergen
 # location = Location(latitude=69.6492, longitude=18.9553) # Tromsø
 
 # how far into the past to fetch observations
-# obs_delta = datetime.timedelta(days=2)
+obs_delta = datetime.timedelta(days=2)
 
-# predictions = frc.compute_now(location, obs_delta)
 
 #mydb = db.Database("dbname=firerisk user=postgres password=123456aa host=host.docker.internal port=5555")
 
@@ -34,15 +33,16 @@ location = Location(latitude=60.383, longitude=5.3327)  # Bergen
 # except Exception as e:
 #     print(f"Location error {e}")
 
-# firerisks = predictions.firerisks
+""" predictions = frc.compute_now(location, obs_delta)
+firerisks = predictions.firerisks
 
-# for firerisk in firerisks:
-#     try:    
-#         insert_fire_risk_prediction(1, firerisk.timestamp, firerisk.ttf)
-#         print("Fire risk inserted successfully")
-#     except Exception as e:
-#         print(f'Error inserting fire risk: {e}')
-
+for firerisk in firerisks:
+    try:    
+        insert_fire_risk_prediction(1, firerisk.timestamp, firerisk.ttf)
+        print("Fire risk inserted successfully")
+    except Exception as e:
+        print(f'Error inserting fire risk: {e}')
+ """
 # print(predictions)
 
 # Configure and run Uvicorn server properly
