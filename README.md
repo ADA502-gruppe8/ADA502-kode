@@ -55,7 +55,8 @@ SECRET_KEY ="jeppepåberget"
 Secret_key er ikke i bruk, så den er ikke viktig nå. Dette er for å slippe en feilmelding.
 
 .env filen skal ligge yterst i mappen slik:
-![image](https://github.com/ADA502-gruppe8/ADA502-kode/assets/122608579/aed8c33f-ccd1-4d1d-b9aa-2561a99d0dba)
+![image](https://github.com/ADA502-gruppe8/ADA502-kode/assets/122608579/3b5907f8-4dec-4ab8-92ea-6e8ae22b5d64)
+
 
 ## Kjøring
 
@@ -72,7 +73,7 @@ Det vil dukke opp en folder "data", som vil være databasen, og lagd i prosjekte
 
 ## Docker
 
-Etter å kjørt dokcer compose build/up, burde man finne dette inne i docker desktop
+Etter å kjørt docker compose build/up, burde man finne dette inne i docker desktop
 
 ![](image.png)
 
