@@ -21,7 +21,7 @@ https://code.visualstudio.com/
 
 ## Cloning the Repository
 
-To clone this repository, run the following command in your terminal:
+For å klone dette repositoriet, kjør følgende kommando i terminalen:
 
 git clone https://github.com/ADA502-gruppe8/ADA502-kode.git
 
