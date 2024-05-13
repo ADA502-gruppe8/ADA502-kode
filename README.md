@@ -1,12 +1,16 @@
 # ADA502 - Cloud - firerisk
 
-A brief description of what this project does and who it's for.
+Dette prosjektet er laget i samarbeid med HVL og masterlinjen Anvendt datateknologi og ingeniørvitenskap, og er en del av faget ADA502 Cloud Computing and Software Systems.
+
+Prosjektet går ut på å videreutvikle et tidligere prosjekt angående brannfarestatus i Norge, oppgaven vår er å lage en "Cloud service" for eventuelle brukere hvor vi kan sende en verdi for brannfare til brukeren.
+
+Grunnet den korte tiden vi hadde til prosjektet er ikke produktet ferdigstilt enda, men under vil det bli forklart hvordan du kan teste den nåværende Webapplikasjonen.
 
 ## Pre-requisites
 
 For å kjøre prosjektet vil jeg anbefale følgende verktøy:
 
-- Beekeeper (database)
+- Beekeeper (eller annen database GUI)
 https://www.beekeeperstudio.io/
 
 - Docker desktop
