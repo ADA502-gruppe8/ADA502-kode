@@ -41,14 +41,14 @@ Er det en mappe med navn "data", så må den slettes. Hvis den ikke er der, så 
 Det må opprettes en .env fil, som ligger i den ytterste mappen "ADA502-Kode"
 .env filen må opprettes, og innholde disse feltene
 
-Du må fylle ut linje 2 og 3 med dine data.
+Du må fylle ut linje 2 og 3 med din Postgres konto.
 
-DATABASE_HOST = 'localhost' <br />
-DATABASE_USERNAME = '' <br />
-DATABASE_PASSWORD = '' <br />
+DATABASE_HOST='localhost' <br />
+DATABASE_USERNAME='' <br />
+DATABASE_PASSWORD='' <br />
 DATABASE_PORT='5555' <br />
-DATABASE_LOGIN = 'login' <br />
-DATABASE_FIRERISK ='firerisk' <br />
+DATABASE_LOGIN='login' <br />
+DATABASE_FIRERISK='firerisk' <br />
 
 SECRET_KEY ="jeppepåberget"
 
