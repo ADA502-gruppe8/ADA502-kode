@@ -42,7 +42,9 @@ CREATE TABLE IF NOT EXISTS fire_risk_predictions (
     fire_risk_score NUMERIC
 );
 
+-- connect to the login database
 \c login
+
 -- Create a table for roles
 CREATE TABLE IF NOT EXISTS roles (
     id SERIAL PRIMARY KEY,
@@ -55,6 +57,16 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(255) NOT NULL,
     role_id INTEGER NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+-- Create a table for storing authentication tokens
+CREATE TABLE IF NOT EXISTS user_tokens (
+    token_id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    token VARCHAR(512) NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    FOREIGN KEY (username) REFERENCES users(username)
 );
 
 INSERT INTO roles (name) VALUES ('admin'), ('user') ON CONFLICT (name) DO NOTHING;

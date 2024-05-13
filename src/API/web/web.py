@@ -2,9 +2,10 @@ from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from src.API.db.auth import auth  # Adjust the path as necessary
-from src.API.db.conDeconDb import Database
+import API.db.auth.auth as auth
+from API.db.conDeconDb import Database
 from passlib.context import CryptContext
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 templates = Jinja2Templates(directory="API/web/templates")
@@ -27,10 +28,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 def get_login_page(request: Request, msg: str = None):
     return templates.TemplateResponse("login.html", {"request": request})
 
-@app.post("/make-user")
+@app.post("/make-user", response_class=RedirectResponse)
 async def make_user(username: str = Form(...), password: str = Form(...)):
     hashed_password = hash_password(password)
-    # Update the DSN with your actual database connection string details
     DSN = "dbname=login user=postgres password=123456aa host=host.docker.internal port=5555"
     db = Database(DSN)
 
@@ -40,11 +40,21 @@ async def make_user(username: str = Form(...), password: str = Form(...)):
             INSERT INTO users (username, password_hash, role_id) VALUES (%s, %s, %s)
         ''', (username, hashed_password, role_id))
         db.conn.commit()
+
+        # Generate the JWT token after successfully creating the user
+        token = auth.create_access_token({"username": username, "role_id": role_id})
+
+        # Set the JWT token in an HTTP-only cookie
+        response = RedirectResponse(url="/location", status_code=303)
+        response.set_cookie(key="Authorization", value=f"Bearer {token}", httponly=True)
+        return response
+
     except Exception as e:
-        print(f"An error occurred: {e}")
+        db.conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
     finally:
         db.close()
-    return RedirectResponse(url="/location", status_code=303)
 
 @app.post("/login")
 async def form_login(request: Request, username: str = Form(...), password: str = Form(...)):  # Added request: Request here
@@ -54,7 +64,6 @@ async def form_login(request: Request, username: str = Form(...), password: str 
         # If either field is empty, redirect back to the login page with a message
         return templates.TemplateResponse("login.html", {"request": request, "msg": "Fuck u mate"})
 
-# Protected route example using the dependency
 @app.get("/location", response_class=HTMLResponse)
 def get_location_page(request: Request, user: dict = Depends(get_current_user)):
     return templates.TemplateResponse("location.html", {"request": request, "user": user})

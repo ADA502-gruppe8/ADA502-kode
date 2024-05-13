@@ -32,6 +32,13 @@ def create_user(user: UserCreate, connection):
     finally:
         close_db_connection(connection)
 
+def store_token(db, username, token, expires_at):
+    sql = """
+    INSERT INTO user_tokens (username, token, expires_at) VALUES (%s, %s, %s)
+    """
+    db.cursor.execute(sql, (username, token, expires_at))
+    db.conn.commit()
+
 def delete_user(user_email: str):
     # SQL statement for deleting a user
     sql = "DELETE FROM users WHERE username = %s"
