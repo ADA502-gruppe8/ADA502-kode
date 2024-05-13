@@ -2,7 +2,7 @@
 
 Dette prosjektet er laget i samarbeid med HVL og masterlinjen Anvendt datateknologi og ingeniørvitenskap, og er en del av faget ADA502 Cloud Computing and Software Systems.
 
-Prosjektet går ut på å videreutvikle et tidligere prosjekt angående brannfare status i Norge, oppgaven vår er å lage en "Cloud service" for eventuelle kjøpere hvor vi kan sende en verdi for brannfare til brukere.
+Prosjektet går ut på å videreutvikle et tidligere prosjekt angående brannfarestatus i Norge, oppgaven vår er å lage en "Cloud service" for eventuelle brukere hvor vi kan sende en verdi for brannfare til brukeren.
 
 Grunnet den korte tiden vi hadde til prosjektet er ikke produktet ferdigstilt enda, men under vil det bli forklart hvordan du kan teste den nåværende Webapplikasjonen.
 
