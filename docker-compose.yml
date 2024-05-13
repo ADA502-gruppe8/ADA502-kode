@@ -17,7 +17,7 @@ services:
       - db
     build: .
     ports:
-      - 5000:5000
+      - 5556:5000
     environment:
       SECRET_KEY: ${SECRET_KEY}
     restart: always
