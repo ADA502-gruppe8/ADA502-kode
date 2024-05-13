@@ -109,7 +109,7 @@ Du ser forskjellen i siste linje mellom login og firerisk i bildene under.
 
 Webappen kjører og du skal finne den på "[localhost:5000](http://localhost:5000/)"
 
-Når du kjører appen så kommer den med "Uvicorn running on http://0.0.0.0:5000" , men du må bruke (http://localhost:5000/)
+Når du kjører appen så kommer den med "Uvicorn running on http://0.0.0.0:5000" , men du må bruke (http://localhost:5556/)
 
 Der vil du komme til ulike interface
 
