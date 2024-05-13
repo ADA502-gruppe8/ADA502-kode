@@ -26,5 +26,5 @@ COPY init.sql /docker-entrypoint-initdb.d/
 # Expose the port the app runs on
 EXPOSE 5000 5432
 
-# Run the application
-CMD ["/root/.local/bin/poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+# Run the application - Kjører på port 5000 internt i container
+CMD ["/root/.local/bin/poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]  

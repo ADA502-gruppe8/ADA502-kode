@@ -10,14 +10,14 @@ services:
       - ./data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5555:5432"
+      - "5555:5432"  # Port 5432 i dockerconteiner, Port 5555 utad
   
   app:
     depends_on:
       - db
     build: .
     ports:
-      - 5556:5000
+      - 5556:5000   # Port 5000 i dockerconteiner, Port 5556 utad
     environment:
       SECRET_KEY: ${SECRET_KEY}
     restart: always
